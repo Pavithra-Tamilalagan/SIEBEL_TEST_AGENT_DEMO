@@ -1,0 +1,46 @@
+{
+  "name": "SIEBEL_TEST_AGENT",
+  "version": "1.0.0",
+  "description": "Siebel UI automation with Playwright",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "codegen": "playwright codegen --channel=msedge",
+    "codegen:proxy": "node scripts/run-codegen.js",
+    "test:codegen:credit": "set HEADLESS=false&& playwright test tests/codegen-debug-credit-check.spec.js --project=edge --workers=1",
+    "test:codegen:session": "set HEADLESS=false&& playwright test tests/codegen-single-tab-session.spec.js --project=edge --workers=1",
+    "browser:open": "node scripts/open-browser.js",
+    "agent:run": "node src/agent/run-siebel-agent.js",
+    "agent:run:headed": "set HEADLESS=false&& node src/agent/run-siebel-agent.js",
+    "agent:input": "node .github/agents/input-agent.js",
+    "orchestrator": "node .github/skills/orchestrator-agent.js",
+    "figma:convert": "node src/utils/pdf-to-images.js input/SSJ.pdf && node src/utils/pdf-to-images.js input/SFJ.pdf",
+    "test:ssj": "node scripts/run-ssj-flow.js",
+    "test:ssj:clean": "node scripts/run-ssj-flow.js",
+    "test:ssj:headed": "set HEADLESS=false&& node scripts/run-ssj-flow.js",
+    "report": "playwright show-report output/playwright-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=20 <24"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "@playwright/test": "^1.62.0",
+    "axios": "^1.18.1",
+    "dotenv": "^17.4.2",
+    "exceljs": "^4.4.0",
+    "fs-extra": "^11.4.0",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0"
+  }
+}

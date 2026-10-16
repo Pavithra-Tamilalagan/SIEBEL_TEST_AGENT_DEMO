@@ -233,6 +233,56 @@ function resolveExpectedFigmaImage(testCaseId, options = {}) {
     return defaultPath;
 }
 
+function parseTomNumber(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return 0;
+    const match = raw.match(/(?:TOM[_-]?)?(\d+)/i);
+    if (!match) return 0;
+    return Number.parseInt(match[1], 10) || 0;
+}
+
+function normalizeTomId(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+    const match = raw.match(/(?:TOM[_-]?)?(\d+)/i);
+    if (!match) return raw.toUpperCase();
+    const tomNum = Number.parseInt(match[1], 10);
+    return `TOM_${String(tomNum).padStart(2, '0')}`;
+}
+
+function parseTomSelection(selector = '') {
+    const raw = String(selector || '').trim();
+    if (!raw || /^(all|--all)$/i.test(raw)) return [];
+
+    const entries = raw
+        .split(/[;,\s]+/)
+        .map((entry) => String(entry || '').trim())
+        .filter(Boolean);
+
+    const selected = new Set();
+    for (const entry of entries) {
+        if (!entry || entry === ',') continue;
+
+        if (entry.includes('-')) {
+            const parts = entry.split('-').map((part) => String(part || '').trim()).filter(Boolean);
+            if (parts.length === 2) {
+                const start = parseTomNumber(parts[0]);
+                const end = parseTomNumber(parts[1]);
+                const begin = Math.min(start, end);
+                const finish = Math.max(start, end);
+                for (let num = begin; num <= finish; num += 1) {
+                    selected.add(normalizeTomId(num));
+                }
+                continue;
+            }
+        }
+
+        selected.add(normalizeTomId(entry));
+    }
+
+    return Array.from(selected).sort((a, b) => parseTomNumber(a) - parseTomNumber(b));
+}
+
 async function runFullAutomation(testCaseId = '', inputFilePath, options = {}) {
     const resolvedInput = inputFilePath || process.env.INPUT_CSV;
 
@@ -273,15 +323,23 @@ async function runFullAutomation(testCaseId = '', inputFilePath, options = {}) {
         await appendOrchLog(`[STEP 2] Warning: failed to list generated spec dir ${genOutDir}: ${e && e.message}`);
     }
 
-    // If a specific testCaseId was provided, execute only that TOM
     const normalizedTestCaseId = testCaseId ? String(testCaseId).trim() : '';
+    const requestedTomIds = parseTomSelection(normalizedTestCaseId);
+    const selectedTestcases = requestedTomIds.length
+        ? testcases.filter((testcase) => requestedTomIds.includes(normalizeTomId(testcase.TOM_NUM)))
+        : testcases;
+
+    if (normalizedTestCaseId && requestedTomIds.length && !selectedTestcases.length) {
+        throw new Error(`No test cases matched selection: ${normalizedTestCaseId}`);
+    }
+
     const results = [];
     const agentTimings = [{ agent: 'input-agent', testcase: 'ALL', durationMs: Date.now() - inputStart }];
     // If a specific TOM was provided, execute only that TOM. If not provided, execute all TOMs from the input file.
     const totalStart = Date.now();
 
-    if (normalizedTestCaseId) {
-        const matchedInput = testcases.find((testcase) => String(testcase.TOM_NUM || '').toUpperCase() === normalizedTestCaseId.toUpperCase());
+    if (normalizedTestCaseId && requestedTomIds.length === 1) {
+        const matchedInput = testcases.find((testcase) => normalizeTomId(testcase.TOM_NUM) === requestedTomIds[0]);
         if (!matchedInput) {
             throw new Error(`Test case ${normalizedTestCaseId} not found in input file`);
         }
@@ -444,9 +502,10 @@ async function runFullAutomation(testCaseId = '', inputFilePath, options = {}) {
                 };
     }
 
-    // No specific TOM passed: execute all testcases sequentially and collect results
+    // No specific TOM passed: execute all testcases sequentially and collect results.
+    // This branch also executes multi-TOM selections such as TOM_02-TOM_10.
     const nodePath = process.execPath;
-    for (const row of testcases) {
+    for (const row of selectedTestcases) {
         const caseId = String(row.TOM_NUM || '').trim();
         if (!caseId) continue;
 
@@ -575,7 +634,7 @@ async function runFullAutomation(testCaseId = '', inputFilePath, options = {}) {
     const reportJsonOut = path.resolve(__dirname, '..', '..', 'output', 'execution-report.json');
     // compute elapsed time so far to include in summary
     const totalExecutionTimeMs = Date.now() - totalStart;
-    const reportProc = spawnSync(node, [reportAgent, tmpAllResults, reportJsonOut, resolvedInput, String(testcases.length), String(totalExecutionTimeMs)], { encoding: 'utf8' });
+    const reportProc = spawnSync(node, [reportAgent, tmpAllResults, reportJsonOut, resolvedInput, String(selectedTestcases.length || testcases.length), String(totalExecutionTimeMs)], { encoding: 'utf8' });
     if (reportProc.error) throw reportProc.error;
     if (reportProc.status !== 0) {
         throw new Error(`report-generator failed: ${reportProc.stderr}`);
@@ -611,6 +670,8 @@ module.exports = {
     readExcelTestcases,
     readTestcasesFromFile,
     resolveExpectedFigmaImage,
+    parseTomSelection,
+    normalizeTomId,
     runFullAutomation
 };
 
@@ -621,7 +682,7 @@ if (require.main === module) {
     if (testCaseId && String(testCaseId).toLowerCase() === 'all') testCaseId = '';
     if (testCaseId && String(testCaseId).toLowerCase() === '--all') testCaseId = '';
     if (!inputFile) {
-        process.stderr.write('Usage: node .github/skills/orchestrator-agent.js [TOM_ID|all] <INPUT_CSV_OR_XLSX>\nProvide input file path as second argument or set INPUT_CSV env var.\n');
+        process.stderr.write('Usage: node .github/skills/orchestrator-agent.js [TOM_ID|TOM_RANGE|all] <INPUT_CSV_OR_XLSX>\nExamples:\n  TOM_01\n  TOM_02-TOM_10\n  TOM_02,TOM_05,TOM_09\nProvide input file path as second argument or set INPUT_CSV env var.\n');
         process.exitCode = 2;
     } else {
         runFullAutomation(testCaseId, inputFile)

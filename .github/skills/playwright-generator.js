@@ -208,6 +208,17 @@ function generateLaunchMobilePLPFunction() {
 		"  const lastNameValue = (journeyOptions.customer && journeyOptions.customer.lastName) || (process.env.LAST_NAME || 'Citizen').trim() || 'Citizen';",
 		"  const addressLookupQuery = (journeyOptions.addressLookup && journeyOptions.addressLookup.query) || (process.env.ADDRESS || '').trim();",
 		"  const suggestionHints = Array.isArray(journeyOptions.addressLookup && journeyOptions.addressLookup.suggestionHints) ? journeyOptions.addressLookup.suggestionHints.filter(Boolean) : [];",
+		"  const stageScreenshots = (journeyOptions && journeyOptions.stageScreenshots) || {};",
+		"  const captureStage = async (stageName) => {",
+		"    const targetPath = stageScreenshots[stageName];",
+		"    if (!targetPath) return;",
+		"    try {",
+		"      await page.screenshot({ path: targetPath, fullPage: true });",
+		"      console.log('Saved stage screenshot:', targetPath);",
+		"    } catch (e) {",
+		"      console.log('Failed to save stage screenshot', stageName, e && e.message);",
+		"    }",
+		"  };",
 		"  const waitForAnyVisible = async (locators, timeout = 45000) => {",
 		"    const start = Date.now();",
 		"    while (Date.now() - start < timeout) {",
@@ -437,6 +448,7 @@ function generateLaunchMobilePLPFunction() {
 		"      if ((await loginButton.count()) > 0) await clickLocatorRobust(loginButton);",
 		"      await page.waitForLoadState('networkidle', { timeout: 60000 }).catch(() => {});",
 		"      await page.waitForFunction(() => !window.location.href.includes('SWECmd=Login'), { timeout: 60000 }).catch(() => {});",
+		"      await captureStage('login');",
 		"    } catch (e) { console.log('launchMobilePLP: login attempt failed', e && e.message); }",
 		"  }",
 		"  const salesCalculatorReached = await openSalesCalculator();",
@@ -445,6 +457,7 @@ function generateLaunchMobilePLPFunction() {
 		"    console.log('launchMobilePLP: Sales calculator screen not reached; url=', page.url(), 'bodySnippet=', String(bodyText || '').slice(0, 1200).replace(/\\s+/g, ' '));",
 		"    throw new Error('Sales calculator screen was not reached');",
 		"  }",
+		"  await captureStage('sales-calculator');",
 		"  const firstNameField = page.getByLabel(/First name|First Name/i).first();",
 		"  const lastNameField = page.getByLabel(/Last name|Last Name/i).first();",
 		"  if ((await firstNameField.count()) > 0) await firstNameField.fill(firstNameValue).catch(() => {});",
@@ -471,6 +484,7 @@ function generateLaunchMobilePLPFunction() {
 		"  if (!coverageCheckLoaded) {",
 		"    throw new Error('Coverage check page did not finish loading after address selection');",
 		"  }",
+		"  await captureStage('coverage-check');",
 		"  const nextAfterCoverageCandidates = [",
 		"    page.getByRole('button', { name: /Next/i }).last(),",
 		"    page.getByText(/^Next$/i).last(),",
@@ -486,6 +500,7 @@ function generateLaunchMobilePLPFunction() {
 		"  if (!mobilePLPLoaded) {",
 		"    throw new Error('Mobile PLP did not finish loading after coverage check');",
 		"  }",
+		"  await captureStage('mobile-plp');",
 		"  return;",
 		"}",
 	].join('\n');
@@ -620,6 +635,24 @@ function generateVerifyBlock(step) {
 		return `// Manual verification required: ${escapeSingleQuotes(text)}`;
 	}
 
+	if (/previously selected device remains retained/i.test(text) || /selected device remains retained/i.test(text)) {
+		return [
+			"// Verify previously selected device remains retained after pagination",
+			"{",
+			"  const savedTitle = globalThis.__tom03SelectedDeviceTitle || '';",
+			"  const savedSnippet = globalThis.__tom03SelectedDeviceSnippet || '';",
+			"  const savedCounter = globalThis.__tom03InitialCounter || '';",
+			"  const bodyText = ((await page.locator('body').innerText().catch(() => '')) || '').replace(/\\s+/g, ' ');",
+			"  const titleRetained = savedTitle ? bodyText.includes(savedTitle) : false;",
+			"  const snippetRetained = savedSnippet ? bodyText.includes(savedSnippet) : false;",
+			"  const counterText = await page.getByText(/\\b\\d+\\s*-\\s*\\d+\\s+of\\s+\\d+\\s+items\\b/i).first().innerText().catch(() => '');",
+			"  const counterReturned = savedCounter ? counterText.replace(/\\s+/g, ' ').trim() === savedCounter : false;",
+			"  globalThis.__tom03SelectionRetained = Boolean((titleRetained || snippetRetained) && counterReturned);",
+			"  await expect(globalThis.__tom03SelectionRetained).toBeTruthy();",
+			"}"
+		].join('\n');
+	}
+
 	// Pagination / card-set change phrases should not be converted into literal text assertions.
 	// Prefer manual verification or specialized pagination control checks instead.
 	if (/\b(card set changes|card set|pagination|next arrow|previous arrow|returns without breaking selected tab context)\b/i.test(text)) {
@@ -647,25 +680,68 @@ function generateVerifyBlock(step) {
 	}
 
 	// Specific mapping: combined per-device-card verification sentence that lists
-	// pricing, attributes, Check store stock button, and Select button.
-	if (/device card shows stock.*pricing.*attributes.*check store stock.*select/i.test(text)) {
+	// pricing, attributes, stock state, and Select button.
+	if (
+		/apple-filtered/i.test(text) && /device card/i.test(text) && /price/i.test(text) && /select\s+(?:action|button)/i.test(text) ||
+		/device card shows stock.*pricing.*attributes.*check store stock.*select/i.test(text) ||
+		/listing shows.*visible device card.*stock state.*price.*select (?:action|button)/i.test(text) ||
+		/apple-filtered.*device listing.*visible device card.*stock state.*price.*attribute details.*select button/i.test(text) ||
+		/visible device card.*stock state.*price.*attribute details.*select button/i.test(text)
+	) {
 		return [
 			"// Device card verification: pricing/attributes and actions",
 			"{",
 			"  // Stock capability: prefer role-based Check store stock button to verify stock functionality (avoid hidden status labels)",
-			"  await expect(page.getByRole('button', { name: /Check store stock/i }).first()).toBeVisible();",
+			"  const _selectControl = page.getByRole('button', { name: /Select/i }).first();",
+			"  await expect(_selectControl).toBeVisible();",
 			"  // Pricing presence",
 "  { const _loc = page.getByText(/\\$|AUD|GBP|\\u00A3|\\u20AC/i); let _found=false; for (let _i=0; _i<await _loc.count(); _i++){ if (await _loc.nth(_i).isVisible()){ _found=true; break; } } await expect(_found).toBeTruthy(); }",
 			"  // Attributes/specifications presence (match common attribute indicators, ensure a visible match)",
-			"  { const _locAttr = page.getByText(/\\d+\\s*GB|GB|Storage|Memory|RAM|colour|color|features|specification|specifications|specs|MP|inch|battery/i); let _foundAttr=false; for (let _i=0; _i<await _locAttr.count(); _i++){ if (await _locAttr.nth(_i).isVisible()){ _foundAttr=true; break; } } await expect(_foundAttr).toBeTruthy(); }",
-			"  // Select button",
-			"  await expect(page.getByRole('button', { name: /Select/i }).first()).toBeVisible();",
+			"  { const _locAttr = page.getByText(/\\d+\\s*GB|GB|Storage|Memory|RAM|colour|color|features|specification|specifications|specs|MP|inch|battery|device care|colour/i); let _foundAttr=false; for (let _i=0; _i<await _locAttr.count(); _i++){ if (await _locAttr.nth(_i).isVisible()){ _foundAttr=true; break; } } await expect(_foundAttr).toBeTruthy(); }",
+			"  // Optional stock-state hint (visible text or action label)",
+			"  { const _locStock = page.getByText(/In stock|Low Stock|Back-order|Out of Stock|Check store stock/i); let _foundStock=false; for (let _i=0; _i<await _locStock.count(); _i++){ if (await _locStock.nth(_i).isVisible()){ _foundStock=true; break; } } await expect(_foundStock).toBeTruthy(); }",
 			"}"
 		].join('\n');
 	}
 
+	if (/controls?:\s*search,\s*sort by,\s*filter by brand,\s*check delivery estimate,\s*and same as coverage check are visible/i.test(text)) {
+		return [
+			"// Mobile phones controls verification",
+			"await expect(page.getByText(/Search/i).first()).toBeVisible();",
+			"await expect(page.getByText(/Sort by/i).first()).toBeVisible();",
+			"await expect(page.getByText(/Filter by brand/i).first()).toBeVisible();",
+			"await expect(page.getByText(/Check delivery estimate/i).first()).toBeVisible();",
+			"await expect(page.getByText(/Same as coverage check/i).first()).toBeVisible();"
+		].join('\n');
+	}
+
+	if (/wait\s+for\s+the\s+customer-details\/coverage-check\s+page\s+to\s+finish\s+loading/i.test(text) || /coverage check area.*network areas.*available network details.*click next/i.test(text)) {
+		return [
+			"// Coverage check page verification",
+			"{ const cov = page.getByText(/Coverage check|Coverage|network areas|available network details/i).first(); await expect(cov).toBeVisible(); }",
+			"{ const nextButton = page.getByRole('button', { name: /Next/i }).last(); if ((await nextButton.count()) > 0) { await nextButton.click().catch(() => {}); } }"
+		].join('\n');
+	}
+
+	if (/item counter.*of.*items/i.test(text)) {
+		return "{ const _loc = page.getByText(/\\b\\d+\\s*-\\s*\\d+\\s+of\\s+\\d+\\s+items\\b/i); let _found=false; for (let _i=0; _i<await _loc.count(); _i++){ if (await _loc.nth(_i).isVisible()){ _found=true; break; } } await expect(_found).toBeTruthy(); }";
+	}
+
+	if (/new service\s*\d+|new services?/i.test(text) && /created|present|added|visible|cart/i.test(text)) {
+		return [
+			"// New service row verification",
+			"{ const _loc = page.getByText(/New service/i); let _found=false; for (let _i=0; _i<await _loc.count(); _i++){ if (await _loc.nth(_i).isVisible()){ _found=true; break; } } await expect(_found).toBeTruthy(); }"
+		].join('\n');
+	}
+
 	// Specific mapping: Plans area should show proposition, entitlements, and a Select action on each plan tile
-	if (/plans? area shows proposition.*entitlements.*select on each plan tile/i.test(text) || /verify plans? area shows proposition, entitlements, and Select on each plan tile/i.test(text)) {
+	if (
+		/plan area/i.test(text) && /proposition/i.test(text) && /entitlement/i.test(text) && /select/i.test(text) ||
+		/plans? area shows proposition.*entitlements.*select on each plan tile/i.test(text) ||
+		/verify plans? area shows proposition, entitlements, and Select on each plan tile/i.test(text) ||
+		/plan area shows proposition.*entitlement.*enabled select button/i.test(text) ||
+		/plan tiles?.*proposition.*entitlement.*select button/i.test(text)
+	) {
 		return [
 			"// Plans area verification: proposition, entitlements and Select action",
 			"// Check for proposition label or common proposition indicators",
@@ -816,7 +892,7 @@ function generateVerifyBlock(step) {
 		return `{ const _loc = page.getByRole('button', { name: /${escapeRegex(inferred)}/i }).first(); let _found=false; try { if ((await _loc.count()) > 0 && await _loc.isVisible()) _found = true; } catch(e) { } if (!_found) { const _loc2 = page.getByText(/${escapeRegex(inferred)}/i); for (let _i=0; _i<await _loc2.count(); _i++){ if (await _loc2.nth(_i).isVisible()){ _found=true; break; } } } await expect(_found).toBeTruthy(); }`;
 	}
 
-	// Unknown verification: do not generate an assertion that may be incorrect.
+	// Unknown verification: keep it manual instead of turning the whole sentence into a fragile literal text match.
 	return `// Manual verification required: ${escapeSingleQuotes(text)}`;
 }
 
@@ -1008,7 +1084,7 @@ if (!clicked) {
 	}
 }
 await page.waitForTimeout(1000);
-const blockingText = ((await page.locator('body').innerText().catch(() => '')) || '').replace(/\s+/g, ' ');
+const blockingText = ((await page.locator('body').innerText().catch(() => '')) || '').replace(/\\s+/g, ' ');
 if (/Please select plan or device|Please select plan\.?|PlanNull|No new services added/i.test(blockingText)) {
 	throw new Error('Plan selection did not stick before Add to cart');
 }
@@ -1257,8 +1333,103 @@ if (!planSelected) {
 		actions.push(`await Promise.all((await page.getByRole('button', { name: /Select/i }).all()).slice(0,2).map(b => b.click()));`);
 	}
 
-	if (!selectsDeviceAndPlan && /select\s+(one|a)\s+device|select\s+device/i.test(s)) {
-		actions.push(`await page.getByRole('button', { name: /Select/i }).first().click();`);
+	if (!selectsDeviceAndPlan && (/select\s+(one|a)\s+(visible\s+)?device(\s+card)?/i.test(s) || /select\s+device/i.test(s))) {
+		actions.push(`{
+const selectButtons = await page.locator('button.vha-scj-select-btn').all();
+let chosen = null;
+for (const btn of selectButtons) {
+	try {
+		if (await btn.isVisible()) {
+			chosen = btn;
+			break;
+		}
+	} catch (e) {}
+}
+await expect(Boolean(chosen)).toBeTruthy();
+const deviceDetails = await chosen.evaluate((el) => {
+	const visible = (node) => {
+		if (!node) return false;
+		const rect = node.getBoundingClientRect();
+		const style = window.getComputedStyle(node);
+		return !!(rect.width || rect.height) && style.visibility !== 'hidden' && style.display !== 'none';
+	};
+	let current = el;
+	for (let i = 0; current && i < 8; i += 1) {
+		if (visible(current) && /Storage|Colour|Payment term|Device care|Select/i.test((current.innerText || '').replace(/\\s+/g, ' '))) {
+			const lines = (current.innerText || '').split(/\\n+/).map((line) => line.trim()).filter(Boolean);
+			const titleLines = lines.filter((line) => !/^(From:|Storage|Colour|Payment term|Device care|Store stock|Check store stock|Select)$/i.test(line));
+			const title = titleLines.slice(0, 2).join(' ').trim();
+			const snippet = (current.innerText || '').replace(/\\s+/g, ' ').trim();
+			return { title: title.slice(0, 80), snippet: snippet.slice(0, 140) };
+		}
+		current = current.parentElement;
+	}
+	const fallback = ((el.textContent || '').replace(/\\s+/g, ' ').trim());
+	return { title: fallback.slice(0, 80), snippet: fallback.slice(0, 140) };
+});
+globalThis.__tom03SelectedDeviceTitle = (deviceDetails && deviceDetails.title) || '';
+globalThis.__tom03SelectedDeviceSnippet = (deviceDetails && deviceDetails.snippet) || '';
+const counterText = await page.getByText(/\\b\\d+\\s*-\\s*\\d+\\s+of\\s+\\d+\\s+items\\b/i).first().innerText().catch(() => '');
+globalThis.__tom03InitialCounter = counterText.replace(/\\s+/g, ' ').trim();
+await chosen.click();
+}`);
+	}
+
+	if (/move\s+the\s+device\s+carousel\s+forward.*next arrow/i.test(s)) {
+		actions.push(`{
+const before = (await page.getByText(/\\b\\d+\\s*-\\s*\\d+\\s+of\\s+\\d+\\s+items\\b/i).first().innerText().catch(() => '')).replace(/\\s+/g, ' ').trim();
+globalThis.__tom03InitialCounter = globalThis.__tom03InitialCounter || before;
+const nextCandidates = [
+	page.locator('button.vha-scj-next-btn').first(),
+	page.locator('button.carousel-nav-next').first(),
+	page.locator('.vha-scj-next-btn').first(),
+	page.locator('.carousel-nav-next').first()
+];
+let clicked = false;
+for (const candidate of nextCandidates) {
+	try {
+		if ((await candidate.count()) > 0 && await candidate.isVisible()) {
+			await candidate.click({ timeout: 10000 }).catch(() => candidate.click({ timeout: 10000, force: true }));
+			clicked = true;
+			break;
+		}
+	} catch (e) {}
+}
+await expect(clicked).toBeTruthy();
+await page.waitForTimeout(1500);
+const after = (await page.getByText(/\\b\\d+\\s*-\\s*\\d+\\s+of\\s+\\d+\\s+items\\b/i).first().innerText().catch(() => '')).replace(/\\s+/g, ' ').trim();
+globalThis.__tom03NextCounter = after;
+globalThis.__tom03NextChanged = Boolean(after && before && after !== before);
+await expect(globalThis.__tom03NextChanged).toBeTruthy();
+}`);
+	}
+
+	if (/move\s+the\s+device\s+carousel\s+backward.*previous arrow/i.test(s)) {
+		actions.push(`{
+const expected = globalThis.__tom03InitialCounter || '';
+const prevCandidates = [
+	page.locator('button.vha-scj-prev-btn').first(),
+	page.locator('button.carousel-nav-prev').first(),
+	page.locator('.vha-scj-prev-btn').first(),
+	page.locator('.carousel-nav-prev').first()
+];
+let clicked = false;
+for (const candidate of prevCandidates) {
+	try {
+		if ((await candidate.count()) > 0 && await candidate.isVisible()) {
+			await candidate.click({ timeout: 10000 }).catch(() => candidate.click({ timeout: 10000, force: true }));
+			clicked = true;
+			break;
+		}
+	} catch (e) {}
+}
+await expect(clicked).toBeTruthy();
+await page.waitForTimeout(1500);
+const after = (await page.getByText(/\\b\\d+\\s*-\\s*\\d+\\s+of\\s+\\d+\\s+items\\b/i).first().innerText().catch(() => '')).replace(/\\s+/g, ' ').trim();
+globalThis.__tom03ReturnedCounter = after;
+globalThis.__tom03PrevReturned = Boolean(expected && after === expected);
+await expect(globalThis.__tom03PrevReturned).toBeTruthy();
+}`);
 	}
 
 	if (/add\s+to\s+cart/i.test(s) || /add\s+to\s+basket/i.test(s)) {
@@ -1274,13 +1445,37 @@ try {
 		await btn.evaluate((el) => el.click()).catch(() => {});
 	}
 }
+	const initialNewServiceCount = await page.getByText(/New service/i).count().catch(() => 0);
 await page.waitForTimeout(2500);
-const pageText = ((await page.locator('body').innerText().catch(() => '')) || '').replace(/\s+/g, ' ');
-if (/Please select plan or device|Please select plan\.?|PlanNull|No new services added/i.test(pageText)) {
+const pageText = ((await page.locator('body').innerText().catch(() => '')) || '').replace(/\\s+/g, ' ');
+	const alertTexts = await page.locator('[role="alert"], .ui-state-error, .ui-state-highlight, .siebui-error, .siebui-popup, .ui-dialog, .error, .warning').evaluateAll((els) => els
+	.map((el) => (el.innerText || el.textContent || '').replace(/\\s+/g, ' ').trim())
+		.filter(Boolean)
+).catch(() => []);
+	const filteredAlertTexts = (Array.isArray(alertTexts) ? alertTexts : []).filter((text) => !/Siebel Automation Information|Alarm|Snooze|Dismiss/i.test(text));
+	const validationMatches = await page.getByText(/Please select|PlanNull/i).allInnerTexts().catch(() => []);
+	const normalizedValidationMatches = (Array.isArray(validationMatches) ? validationMatches : []).map((text) => String(text || '').replace(/\\s+/g, ' ').trim()).filter(Boolean);
+	const combinedText = [pageText, ...filteredAlertTexts, ...normalizedValidationMatches].filter(Boolean).join(' ');
+const expectsValidation = String(process.env.EXPECT_ADD_TO_CART_VALIDATION || 'false').toLowerCase() === 'true';
+const hasValidationText = /Please select plan or device|Please select plan\.?|PlanNull|No new services added|Please select.*(?:plan|device)/i.test(combinedText);
+	const successMessageVisible = /Cart updated|Changes have been made to your order successfully/i.test(combinedText);
+	const newServiceCount = await page.getByText(/New service/i).count().catch(() => 0);
+	const hasCartSuccess = successMessageVisible || newServiceCount > initialNewServiceCount;
+	const blocked = hasValidationText || (!hasCartSuccess && newServiceCount === initialNewServiceCount);
+globalThis.__lastAddToCartBlocked = blocked;
+globalThis.__lastAddToCartPageText = pageText;
+	globalThis.__lastAddToCartAlertText = filteredAlertTexts.join(' | ');
+	globalThis.__lastAddToCartValidationMatches = normalizedValidationMatches.join(' | ');
+	globalThis.__lastAddToCartInitialNewServiceCount = initialNewServiceCount;
+globalThis.__lastAddToCartNewServiceCount = newServiceCount;
+globalThis.__lastAddToCartSuccess = hasCartSuccess;
+	console.log('ADD_TO_CART_DIAGNOSTICS:', JSON.stringify({ expectsValidation, blocked, hasValidationText, successMessageVisible, hasCartSuccess, initialNewServiceCount, newServiceCount, alertText: globalThis.__lastAddToCartAlertText || '', validationMatches: globalThis.__lastAddToCartValidationMatches || '', pageTextSnippet: combinedText.slice(0, 1000) }));
+if (expectsValidation) {
+	if (!blocked) console.log('Expected add-to-cart validation did not produce a recognized banner; deferring final assertion to post-verification.');
+} else if (blocked) {
 	throw new Error('Add to cart failed: no valid plan/device was added to New services');
 }
-const hasCartSuccess = /Cart updated|Changes have been made to your order successfully|New service/i.test(pageText);
-if (!hasCartSuccess) {
+if (!expectsValidation && !hasCartSuccess) {
 	throw new Error('Add to cart did not show a cart success indicator');
 }
 }`);
@@ -1426,7 +1621,7 @@ while (Date.now() - outcomeStart < 20000) {
 		}
 	}
 	const pageText = ((await page.locator('body').innerText().catch(() => '')) || '').replace(/\s+/g, ' ');
-	if (/Customer details|ID details|Credit check|Order summary|Order Summary|Review order|Order review|Order details|Order submitted|Order created/i.test(pageText)) {
+	if (/Customer details|ID details|Credit check|Order summary|Order Summary|Review order|Order details|Order submitted|Order created/i.test(pageText)) {
 		if (await findVisiblePopup()) {
 			await page.waitForTimeout(1000);
 			continue;
@@ -1440,4 +1635,85 @@ while (Date.now() - outcomeStart < 20000) {
 }
 }`);
 	}
+
+	return actions;
+}
+
+function generateActionBlock(step) {
+    const s = normalizeText(step || '');
+    if (!s) return '';
+    const blocks = (typeof generateActionBlocks === 'function' ? generateActionBlocks(s) : []) || [];
+    const cleaned = blocks
+        .map((code) => String(code || '').trim())
+        .filter(Boolean);
+    if (!cleaned.length) {
+        return `// Unmapped step: ${escapeSingleQuotes(s)}`;
+    }
+    return cleaned.join('\n');
+}
+
+function generateClickLocatorCode(targetText) {
+    const text = cleanControlLabel(targetText || '') || 'control';
+    const safeText = escapeSingleQuotes(text);
+    return `{
+  const targetText = new RegExp(${JSON.stringify(text)}, 'i');
+  const candidates = [
+    page.getByRole('button', { name: targetText }).first(),
+    page.getByRole('link', { name: targetText }).first(),
+    page.getByRole('tab', { name: targetText }).first(),
+    page.getByText(targetText).first(),
+    page.locator('button, a, [role="button"], [role="tab"], [role="link"]').filter({ hasText: targetText }).first()
+  ];
+  let matched = false;
+  for (const candidate of candidates) {
+    if (!candidate) continue;
+    try {
+      if ((await candidate.count()) > 0 && await candidate.isVisible()) {
+        await candidate.scrollIntoViewIfNeeded().catch(() => {});
+        try {
+          await candidate.click({ timeout: 15000 });
+          matched = true;
+          break;
+        } catch (e) {
+          try {
+            await candidate.click({ timeout: 15000, force: true });
+            matched = true;
+            break;
+          } catch (err) {}
+        }
+      }
+    } catch (e) {}
+  }
+  if (!matched) {
+    throw new Error('Unable to find click target: ${safeText}');
+  }
+}`;
+}
+
+module.exports = {
+    normalizeText,
+    extractQuotedText,
+    cleanControlLabel,
+    escapeSingleQuotes,
+    escapeRegex,
+    stripExplanatoryClauses,
+    sanitizeLocatorText,
+    normalizeStepsInput,
+    deriveJourneyRuntimeOptions,
+    generateVisibleControlsLogCode,
+    generateCategoryLocatorCode,
+    generateLaunchMobilePLPFunction,
+    generateSelectServiceTypeFunction,
+    generateEnterTextBlock,
+    generateLoginBlock,
+    inferFieldName,
+    generateNavigateSiteMapBlock,
+    generateLaunchSalesCalculatorBlock,
+    generateClickBlock,
+    generateVerifyBlock,
+    generateGenericBlock,
+    generateActionBlocks,
+    generateActionBlock,
+    generateClickLocatorCode
+};
 

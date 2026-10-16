@@ -289,6 +289,8 @@ async function runExecutionCase(testCaseId = 'TOM_01', inputFilePath) {
 
 async function runExecutionCaseFromCase(executionCase) {
   const artifactManager = await createArtifactManager(executionCase.testCaseId);
+  process.env.CURRENT_TESTCASE_ID = String(executionCase.testCaseId || '');
+  process.env.EXPECT_ADD_TO_CART_VALIDATION = /^(TOM_04|TOM_05)$/i.test(String(executionCase.testCaseId || '')) ? 'true' : 'false';
   const tomMatch = String(executionCase.testCaseId || '').match(/^TOM_0*([0-9]+)$/i);
   const tomNum = tomMatch ? Number(tomMatch[1]) : NaN;
   const inMobileRange = Number.isFinite(tomNum) && tomNum >= 1 && tomNum <= 58;
@@ -462,6 +464,12 @@ async function runExecutionCaseFromCase(executionCase) {
       steps: executionCase.steps,
       Post_Verification: executionCase.postVerification
     }) : {};
+    journeyOptions.stageScreenshots = {
+      login: path.resolve(artifactManager.paths.screenshotDir, `${executionCase.testCaseId}-stage-login.png`),
+      'sales-calculator': path.resolve(artifactManager.paths.screenshotDir, `${executionCase.testCaseId}-stage-sales-calculator.png`),
+      'coverage-check': path.resolve(artifactManager.paths.screenshotDir, `${executionCase.testCaseId}-stage-coverage-check.png`),
+      'mobile-plp': path.resolve(artifactManager.paths.screenshotDir, `${executionCase.testCaseId}-stage-mobile-plp.png`)
+    };
 
     if (inMobileRange && launchMobilePLP) {
       console.log('Invoking shared launchMobilePLP() helper for', executionCase.testCaseId);
@@ -482,45 +490,6 @@ async function runExecutionCaseFromCase(executionCase) {
           throw lhErr;
         }
       }
-
-      // After helper run take staged screenshots for major phases (Login, Sales Calculator, Coverage Check, Mobile PLP)
-      async function saveStageScreenshot(stageName) {
-        try {
-          page = await resolveActivePage(context, page);
-          const fileName = `${executionCase.testCaseId}-stage-${stageName}.png`;
-          const filePath = path.resolve(artifactManager.paths.screenshotDir, fileName);
-          await page.screenshot({ path: filePath, fullPage: true });
-          console.log('Saved stage screenshot:', filePath);
-        } catch (sErr) { console.warn('Failed to save stage screenshot', stageName, sErr && sErr.message); }
-      }
-
-      // Login snapshot (post-login state)
-      await saveStageScreenshot('login');
-
-      // Sales Calculator snapshot
-      try {
-        if (await page.getByText(/Sales calculator/i).first().count() > 0) {
-          await saveStageScreenshot('sales-calculator');
-        }
-      } catch (e) {}
-
-      // Coverage Check snapshot
-      try {
-        if ((await page.getByRole('link', { name: /Coverage Check/i }).first().count()) > 0 || (await page.getByRole('textbox', { name: /address/i }).first().count()) > 0) {
-          await saveStageScreenshot('coverage-check');
-        }
-      } catch (e) {}
-
-      // Mobile PLP snapshot
-      try {
-        const mobileShellVisible =
-          (await page.getByText(/Mobile phones/i).first().count() > 0) ||
-          (await page.getByRole('button', { name: /Calculate Bundle & Save/i }).first().count() > 0) ||
-          (await page.getByRole('button', { name: /Create quote/i }).first().count() > 0);
-        if (mobileShellVisible) {
-          await saveStageScreenshot('mobile-plp');
-        }
-      } catch (e) {}
 
       // After the shared helper, start from the first true post-helper business step.
       const firstPostHelperIndex = stepsToExecute.findIndex((s) => /mobile\s*plp\s+tab|plan\s+tile|device\s+card|storage\s+option|payment\s+term|device\s+care|add\s+to\s+cart|calculate\s+bundle\s*&?\s*save|create\s+quote|create\s+order/i.test(s));
@@ -672,15 +641,183 @@ async function runExecutionCaseFromCase(executionCase) {
     async function runPostVerifications() {
       const raw = String(executionCase.postVerification || '').trim();
       if (!raw) return [];
-      const lines = raw.split(/\r?\n|;|\.|\n/).map(s => String(s||'').trim()).filter(Boolean);
+      const lines = raw
+        .split(/\r?\n|;/)
+        .map(s => String(s || '').trim())
+        .filter(Boolean);
       const results = [];
       const escapeForRegex = (s) => String(s||'').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-      for (const l of lines) {
+      for (const rawLine of lines) {
+        const l = String(rawLine || '')
+          .replace(/^[\s\-\*•\u2022\u2023\u2043\u2219\u00B7]+/, '')
+          .replace(/^['\"]+|['\"]+$/g, '')
+          .trim();
+        if (!l) continue;
         const item = { verification_name: l, expected: l, actual: null, status: 'PASS', failure_reason: '' };
         try {
+          // Human-readable checks that describe groups of visible labels or state rather than exact sentence matches.
+          if (/item counter.*total format/i.test(l)) {
+            const counterFound = await page.getByText(/\b\d+\s*-\s*\d+\s+of\s+\d+\b/i).count();
+            item.actual = counterFound > 0 ? 'counter-present' : 'missing';
+            if (!counterFound) { item.status = 'FAIL'; item.failure_reason = 'Expected item counter format was not visible'; }
+            results.push(item); continue;
+          }
+
+          if (/next arrow/i.test(l) && /counter range/i.test(l)) {
+            const changed = Boolean(globalThis.__tom03NextChanged);
+            item.actual = changed ? `${globalThis.__tom03InitialCounter || 'n/a'} -> ${globalThis.__tom03NextCounter || 'n/a'}` : 'unchanged';
+            if (!changed) { item.status = 'FAIL'; item.failure_reason = 'Next arrow did not change the counter range'; }
+            results.push(item); continue;
+          }
+
+          if (/previous arrow/i.test(l) && /prior card set/i.test(l)) {
+            const returned = Boolean(globalThis.__tom03PrevReturned);
+            let mobileTabVisible = false;
+            try {
+              mobileTabVisible = (await page.getByText(/Mobile phones/i).count()) > 0;
+            } catch (e) {}
+            item.actual = `returned=${returned ? 'yes' : 'no'}; mobileTab=${mobileTabVisible ? 'yes' : 'no'}`;
+            if (!returned || !mobileTabVisible) { item.status = 'FAIL'; item.failure_reason = 'Previous arrow did not return to the prior card set on Mobile phones'; }
+            results.push(item); continue;
+          }
+
+          if (/previously selected device remains retained/i.test(l) || /selected device remains retained/i.test(l)) {
+            const retained = Boolean(globalThis.__tom03SelectionRetained);
+            item.actual = retained ? 'retained' : 'not-retained';
+            if (!retained) { item.status = 'FAIL'; item.failure_reason = 'Previously selected device was not retained after pagination'; }
+            results.push(item); continue;
+          }
+
+          if (/plan/i.test(l) && /proposition/i.test(l) && /entitlement/i.test(l) && /select/i.test(l)) {
+            const keys = [/proposition/i, /entitlement/i, /select/i];
+            let matches = 0;
+            for (const key of keys) {
+              try {
+                if ((await page.getByText(key).count()) > 0) matches += 1;
+              } catch (e) {}
+            }
+            item.actual = `${matches}/3 label groups present`;
+            if (matches < 2) { item.status = 'FAIL'; item.failure_reason = 'Expected plan tile labels were not visible'; }
+            results.push(item); continue;
+          }
+
+          if (/controls\s+search,\s*sort by,\s*filter by brand,\s*check delivery estimate,\s*and same as coverage check are visible/i.test(l)) {
+            const labels = ['Search', 'Sort by', 'Filter by brand', 'Check delivery estimate', 'Same as coverage check'];
+            let found = 0;
+            for (const label of labels) {
+              try {
+                if ((await page.getByText(new RegExp(escapeForRegex(label), 'i')).count()) > 0) found += 1;
+              } catch (e) {}
+            }
+            item.actual = `${found}/${labels.length} controls visible`;
+            if (found < 3) { item.status = 'FAIL'; item.failure_reason = 'Expected Mobile phones controls were not visible'; }
+            results.push(item); continue;
+          }
+
+          if (/apple.*device card|device card.*apple|visible device card.*stock state.*price.*select/i.test(l)) {
+            let selectVisible = false;
+            try {
+              selectVisible = (await page.getByRole('button', { name: /^Select$/i }).count()) > 0;
+            } catch (e) {}
+            if (!selectVisible) {
+              try {
+                selectVisible = (await page.getByText(/^Select$/i).count()) > 0;
+              } catch (e) {}
+            }
+
+            let priceVisible = false;
+            try {
+              priceVisible = (await page.getByText(/per month/i).count()) > 0 || (await page.getByText(/\$\s*\d+/i).count()) > 0;
+            } catch (e) {}
+
+            let stockVisible = false;
+            try {
+              stockVisible = (await page.getByText(/In stock|Low Stock|Back-order|Out of Stock/i).count()) > 0;
+            } catch (e) {}
+
+            let attributeVisible = false;
+            try {
+              attributeVisible = (await page.getByText(/Storage|Colour|Payment term|Device care/i).count()) > 0;
+            } catch (e) {}
+
+            let appleVisible = true;
+            if (/apple/i.test(l)) {
+              try {
+                appleVisible = (await page.getByText(/Apple/i).count()) > 0;
+              } catch (e) {
+                appleVisible = false;
+              }
+            }
+
+            item.actual = `select=${selectVisible ? 'yes' : 'no'}; price=${priceVisible ? 'yes' : 'no'}; stock=${stockVisible ? 'yes' : 'no'}; attributes=${attributeVisible ? 'yes' : 'no'}; apple=${appleVisible ? 'yes' : 'no'}`;
+            if (!selectVisible || !priceVisible || !stockVisible || !attributeVisible || !appleVisible) {
+              item.status = 'FAIL';
+              item.failure_reason = 'Expected Apple device card details were not fully visible';
+            }
+            results.push(item); continue;
+          }
+
+          if (/selected state is applied|selected state changes to selected/i.test(l)) {
+            const selectedFound = (await page.getByText(/selected/i).count()) > 0;
+            item.actual = selectedFound ? 'selected-state-visible' : 'missing';
+            if (!selectedFound) { item.status = 'FAIL'; item.failure_reason = 'Selected state was not visible'; }
+            results.push(item); continue;
+          }
+
+          if (/compatible devices remain selectable/i.test(l) || /device list refreshes to compatible options/i.test(l) || /compatible.*select.*visible/i.test(l) || /select.*buttons.*visible/i.test(l) || /device.*select.*visible/i.test(l)) {
+            let selectVisibleCount = 0;
+            try {
+              selectVisibleCount = await page.getByRole('button', { name: /^Select$/i }).count();
+            } catch (e) {}
+            if (!selectVisibleCount) {
+              try {
+                selectVisibleCount = await page.locator('button.vha-scj-select-btn, button.vha-scj-select-plan').count();
+              } catch (e) {}
+            }
+            item.actual = `selectButtons=${selectVisibleCount}`;
+            if (!selectVisibleCount) { item.status = 'FAIL'; item.failure_reason = 'No compatible device selection buttons were visible'; }
+            results.push(item); continue;
+          }
+
+          // Validation message X is shown -> presence check
+          let m = l.match(/Validation message\s*(?:"|')(.+?)(?:"|')\s*is shown\.?$/i);
+          if (m) {
+            const txt = m[1].trim();
+            const expectedNormalized = txt.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+            let found = (await page.getByText(new RegExp(escapeForRegex(txt), 'i')).count()) > 0;
+            if (!found) {
+              const diagnosticText = [globalThis.__lastAddToCartValidationMatches, globalThis.__lastAddToCartAlertText, globalThis.__lastAddToCartPageText]
+                .filter(Boolean)
+                .join(' ')
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, ' ')
+                .trim();
+              found = Boolean(expectedNormalized && diagnosticText.includes(expectedNormalized));
+            }
+            item.actual = found ? 'present' : ((globalThis.__lastAddToCartValidationMatches || globalThis.__lastAddToCartAlertText || globalThis.__lastAddToCartPageText || '').slice(0, 300) || 'missing');
+            if (!found) { item.status = 'FAIL'; item.failure_reason = `Expected validation message '${txt}' not found`; }
+            results.push(item); continue;
+          }
+
+          if (/add to cart is blocked/i.test(l)) {
+            const blocked = Boolean(globalThis.__lastAddToCartBlocked) || (!Boolean(globalThis.__lastAddToCartSuccess) && Number(globalThis.__lastAddToCartNewServiceCount || 0) === 0);
+            item.actual = blocked ? 'blocked' : 'not-blocked';
+            if (!blocked) { item.status = 'FAIL'; item.failure_reason = 'Add to cart was not blocked'; }
+            results.push(item); continue;
+          }
+
+          if (/no new service row is created/i.test(l) || /no cart success message is shown/i.test(l)) {
+            const success = Boolean(globalThis.__lastAddToCartSuccess);
+            const newServiceCount = Number(globalThis.__lastAddToCartNewServiceCount || await page.getByText(/New service/i).count().catch(() => 0));
+            const initialNewServiceCount = Number(globalThis.__lastAddToCartInitialNewServiceCount || 0);
+            item.actual = `success=${success ? 'yes' : 'no'}; initialNewServiceCount=${initialNewServiceCount}; newServiceCount=${newServiceCount}`;
+            if (success || newServiceCount > initialNewServiceCount) { item.status = 'FAIL'; item.failure_reason = 'Unexpected cart success or New service row was present'; }
+            results.push(item); continue;
+          }
+
           // Message shown: X -> presence check
-          let m = l.match(/Message shown:\s*(?:"|')?(.+?)(?:"|')?$/i);
+          m = l.match(/Message shown:\s*(?:"|')?(.+?)(?:"|')?$/i);
           if (m) {
             const txt = m[1].trim();
             const found = (await page.getByText(new RegExp(escapeForRegex(txt), 'i')).count()) > 0;

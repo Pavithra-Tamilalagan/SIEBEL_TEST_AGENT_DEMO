@@ -22,85 +22,149 @@
 - Edit button is visible for the created service row.
 - Tabs Mobile phones, Tablets & MBB, Bundles, Wearables, and Accessories are visible with Mobile phones active.
 - User stays in Mobile PLP and is not redirected to Fixed PLP."
-"TOM_02","Mobile PLP - Mobile phones tab default","Validate default controls and cards on Mobile phones tab","1. Login to Siebel assisted UI with Sales Calculator access.
-2. Navigate to Sales Calculator and open the Mobile PLP flow from quote context.
-3. Open Mobile phones tab.
-4. Verify controls: Search, Sort by, Filter by brand, Check delivery estimate, and Same as coverage check.
-5. Verify each device card shows stock, pricing, attributes, Check store stock, and Select button.
-6. Verify plans area shows proposition, entitlements, and Select on each plan tile.
-7. Example values from SSJ.md/HLD: Use source examples only: Coverage address '10 Bourke St, Melbourne, 3000'; Customer name 'John Citizen'; Quote number '1234567890'; coverage results '4G - Available, 5G - Outdoor only, 5G NSA - Not available'.","- Controls Search, Sort by, Filter by brand, Check delivery estimate, and Same as coverage check are visible.
-- Each visible device card shows stock state, price, attributes, Check store stock, and Select.
-- At least one plan tile shows proposition and entitlement fields with an enabled Select action."
-"TOM_03","Mobile PLP - Mobile phones pagination","Validate item counter and carousel pagination behavior","1. Login to Siebel assisted UI with Sales Calculator access.
-2. Navigate to Sales Calculator and open the Mobile PLP flow from quote context.
-3. Check that item counter such as 1-3 of 50 items is displayed.
-4. Move carousel forward using next arrow.
-5. Move carousel backward using previous arrow.
-6. Verify card set changes and returns without breaking selected tab context.
-7. Example values from SSJ.md/HLD: Use source examples only: Coverage address '10 Bourke St, Melbourne, 3000'; Customer name 'John Citizen'; Quote number '1234567890'; coverage results '4G - Available, 5G - Outdoor only, 5G NSA - Not available'.","- Item counter is displayed in n-m of total format (for example 1-3 of 50 items).
+"TOM_02","Mobile PLP - Mobile phones tab default","Validate default controls and Apple-filtered cards on Mobile phones tab","1. Open the Siebel Start URL and login with the assisted UI credentials.
+2. Open Application Menu and click Site Map.
+3. Filter the Site Map with 'Sales Cal'.
+4. Open the Sales calculator link.
+5. Fill First name and Last name in the Sales calculator customer form.
+6. Click Enter new customer details.
+7. In Address lookup Search, enter '177 pacific'.
+8. Select the suggested address result (codegen recorded '#ui-id-323').
+9. Wait for the customer-details/coverage-check page to finish loading; confirm the Coverage check area, network areas, and available network details are visible, then click Next.
+10. Open the Mobile phones tab.
+11. Verify the Search, Sort by, Filter by brand, Check delivery estimate, and Same as coverage check controls are visible.
+12. Verify the Apple-filtered device listing shows at least one visible device card with stock state, price, attribute details, and a Select button.
+13. Verify the plan area shows proposition and entitlement values and exposes an enabled Select button on at least one plan tile.","- Controls Search, Sort by, Filter by brand, Check delivery estimate, and Same as coverage check are visible.
+- At least one Apple device card shows stock state, price, attribute details, and a Select button.
+- At least one plan tile shows proposition and entitlement values with an enabled Select button."
+"TOM_03","Mobile PLP - Mobile phones pagination","Validate item counter, carousel pagination, and selected device persistence","1. Open the Siebel Start URL and login with the assisted UI credentials.
+2. Open Application Menu and click Site Map.
+3. Filter the Site Map with 'Sales Cal'.
+4. Open the Sales calculator link.
+5. Fill First name and Last name in the Sales calculator customer form.
+6. Click Enter new customer details.
+7. In Address lookup Search, enter '177 pacific'.
+8. Select the suggested address result (codegen recorded '#ui-id-323').
+9. Wait for the customer-details/coverage-check page to finish loading; confirm the Coverage check area, network areas, and available network details are visible, then click Next.
+10. Open the Mobile phones tab.
+11. Select one visible device card.
+12. Check that the item counter such as 1-3 of 71 items is displayed.
+13. Move the device carousel forward using the next arrow.
+14. Move the device carousel backward using the previous arrow.
+15. Verify the previously selected device remains retained after returning to the original card set.","- Item counter is displayed in n-m of total format (for example 1-3 of 71 items).
 - Clicking next arrow changes the visible card set and counter range.
-- Clicking previous arrow returns to the prior card set while staying on Mobile phones tab."
-"TOM_04","Mobile PLP - Add to cart validation no selection","Validate Add to cart when no device and no plan are selected","1. Login to Siebel assisted UI with Sales Calculator access.
-2. Navigate to Sales Calculator and open the Mobile PLP flow from quote context.
-3. Keep all device tiles unselected.
-4. Keep all plan tiles unselected.
-5. Click Add to cart.
-6. Observe validation region above listing tabs.
-7. Example values from SSJ.md/HLD: Use source examples only: Coverage address '10 Bourke St, Melbourne, 3000'; Customer name 'John Citizen'; Quote number '1234567890'; coverage results '4G - Available, 5G - Outdoor only, 5G NSA - Not available'.","- Validation message ""Please select plan or device."" is shown.
+- Clicking previous arrow returns to the prior card set while staying on Mobile phones tab.
+- The previously selected device remains retained after moving forward and backward."
+"TOM_04","Mobile PLP - Add to cart validation no selection","Validate Add to cart when no device and no plan are selected","1. Open the Siebel Start URL and login with the assisted UI credentials.
+2. Open Application Menu and click Site Map.
+3. Filter the Site Map with 'Sales Cal'.
+4. Open the Sales calculator link.
+5. Fill First name and Last name in the Sales calculator customer form.
+6. Click Enter new customer details.
+7. In Address lookup Search, enter '177 pacific'.
+8. Select the suggested address result (codegen recorded '#ui-id-323').
+9. Wait for the customer-details/coverage-check page to finish loading; confirm the Coverage check area, network areas, and available network details are visible, then click Next.
+10. Open the Mobile phones tab.
+11. Keep all device tiles unselected.
+12. Keep all plan tiles unselected.
+13. Click Add to cart.
+14. Observe the validation region above the listing tabs.","- Validation message ""Please select a Plan to proceed"" is shown.
 - Add to cart is blocked.
 - No new service row is created."
-"TOM_05","Mobile PLP - Add to cart validation missing plan","Validate Add to cart when device is selected but plan is missing","1. Login to Siebel assisted UI with Sales Calculator access.
-2. Navigate to Sales Calculator and open the Mobile PLP flow from quote context.
-3. Select one device tile and confirm Selected state.
-4. Do not select any plan tile.
-5. Click Add to cart.
-6. Observe cart and validation area.
-7. Example values from SSJ.md/HLD: Use source examples only: Coverage address '10 Bourke St, Melbourne, 3000'; Customer name 'John Citizen'; Quote number '1234567890'; coverage results '4G - Available, 5G - Outdoor only, 5G NSA - Not available'.","- Validation message ""Please select plan."" is shown.
+"TOM_05","Mobile PLP - Add to cart validation missing plan","Validate Add to cart when device is selected but plan is missing","1. Open the Siebel Start URL and login with the assisted UI credentials.
+2. Open Application Menu and click Site Map.
+3. Filter the Site Map with 'Sales Cal'.
+4. Open the Sales calculator link.
+5. Fill First name and Last name in the Sales calculator customer form.
+6. Click Enter new customer details.
+7. In Address lookup Search, enter '177 pacific'.
+8. Select the suggested address result (codegen recorded '#ui-id-323').
+9. Wait for the customer-details/coverage-check page to finish loading; confirm the Coverage check area, network areas, and available network details are visible, then click Next.
+10. Open the Mobile phones tab.
+11. Select one device tile and confirm the Selected state.
+12. Do not select any plan tile.
+13. Click Add to cart.
+14. Observe the cart and validation area.","- Validation message ""Please select a Plan to proceed"" is shown.
 - Add to cart is blocked until a plan is selected.
 - No cart success message is shown."
-"TOM_06","Mobile PLP - Plan-first selection","Validate plan-first selection updates Selected state","1. Login to Siebel assisted UI with Sales Calculator access.
-2. Navigate to Sales Calculator and open the Mobile PLP flow from quote context.
-3. Select one plan tile first.
-4. Verify plan state changes to Selected.
-5. Verify compatible devices remain selectable.
-6. Click Clear selection and confirm Selected state resets.
-7. Example values from SSJ.md/HLD: Use source examples only: Coverage address '10 Bourke St, Melbourne, 3000'; Customer name 'John Citizen'; Quote number '1234567890'; coverage results '4G - Available, 5G - Outdoor only, 5G NSA - Not available'.","- Selected state is applied only to the tapped plan tile.
-- Device list refreshes to compatible options for the selected plan.
+"TOM_06","Mobile PLP - Plan-first selection","Validate plan-first selection updates Selected state","1. Open the Siebel Start URL and login with the assisted UI credentials.
+2. Open Application Menu and click Site Map.
+3. Filter the Site Map with 'Sales Cal'.
+4. Open the Sales calculator link.
+5. Fill First name and Last name in the Sales calculator customer form.
+6. Click Enter new customer details.
+7. In Address lookup Search, enter '177 pacific'.
+8. Select the suggested address result (codegen recorded '#ui-id-323').
+9. Wait for the customer-details/coverage-check page to finish loading; confirm the Coverage check area, network areas, and available network details are visible, then click Next.
+10. Open the Mobile phones tab.
+11. Select one plan tile first.
+12. Verify the selected plan state changes to Selected.
+13. Verify compatible devices remain selectable.
+14. Click Clear selection and confirm the Selected state resets.","- Selected state is applied only to the tapped plan tile.
+- Compatible device Select buttons remain visible after plan selection.
 - Clear selection removes the Selected state and returns plan/device list to pre-selection state."
-"TOM_07","Mobile PLP - Device-first selection","Validate device-first flow and compatible plan refresh","1. Login to Siebel assisted UI with Sales Calculator access.
-2. Navigate to Sales Calculator and open the Mobile PLP flow from quote context.
-3. Select one device tile first.
-4. Verify device tile changes to Selected.
-5. Verify plans list refreshes for compatible plans.
-6. Select one compatible plan tile.
-7. Example values from SSJ.md/HLD: Use source examples only: Coverage address '10 Bourke St, Melbourne, 3000'; Customer name 'John Citizen'; Quote number '1234567890'; coverage results '4G - Available, 5G - Outdoor only, 5G NSA - Not available'.","- Selected state is applied only to the tapped device tile.
+"TOM_07","Mobile PLP - Device-first selection","Validate device-first flow and compatible plan refresh","1. Open the Siebel Start URL and login with the assisted UI credentials.
+2. Open Application Menu and click Site Map.
+3. Filter the Site Map with 'Sales Cal'.
+4. Open the Sales calculator link.
+5. Fill First name and Last name in the Sales calculator customer form.
+6. Click Enter new customer details.
+7. In Address lookup Search, enter '177 pacific'.
+8. Select the suggested address result (codegen recorded '#ui-id-323').
+9. Wait for the customer-details/coverage-check page to finish loading; confirm the Coverage check area, network areas, and available network details are visible, then click Next.
+10. Open the Mobile phones tab.
+11. Select one device tile first.
+12. Verify the selected device state changes to Selected.
+13. Verify the plans list refreshes for compatible plans.
+14. Select one compatible plan tile.","- Selected state is applied only to the tapped device tile.
 - Plan list refreshes and only compatible plans remain selectable.
 - Selecting one compatible plan marks that plan as Selected for the same service context."
-"TOM_08","Mobile PLP - Add to cart success","Validate successful add to cart for device plus plan","1. Login to Siebel assisted UI with Sales Calculator access.
-2. Navigate to Sales Calculator and open the Mobile PLP flow from quote context.
-3. Select one compatible device and plan.
-4. Optionally populate delivery using Same as coverage check when enabled.
-5. Click Add to cart.
-6. Verify New service row appears in New services section.
-7. Example values from SSJ.md/HLD: Use selection examples: New service 1 'Medium Plan Vodafone Postpaid Plans Aug 2025' + 'iPhone 15 Pro Max 128GB Black'.","- Message shown: ""Cart updated"".
+"TOM_08","Mobile PLP - Add to cart success","Validate successful add to cart for device plus plan","1. Open the Siebel Start URL and login with the assisted UI credentials.
+2. Open Application Menu and click Site Map.
+3. Filter the Site Map with 'Sales Cal'.
+4. Open the Sales calculator link.
+5. Fill First name and Last name in the Sales calculator customer form.
+6. Click Enter new customer details.
+7. In Address lookup Search, enter '177 pacific'.
+8. Select the suggested address result (codegen recorded '#ui-id-323').
+9. Wait for the customer-details/coverage-check page to finish loading; confirm the Coverage check area, network areas, and available network details are visible, then click Next.
+10. Open the Mobile phones tab.
+11. Select one compatible device tile and one compatible plan tile.
+12. Optionally populate delivery using Same as coverage check when it is enabled.
+13. Click Add to cart.
+14. Verify a new service row is created in New services with the selected device and plan.","- Message shown: ""Cart updated"".
 - Message shown: ""Changes have been made to your order successfully."".
 - A new service row is created with Edit controls."
-"TOM_09","Mobile PLP - Service added toast","Validate Service added to cart notification state","1. Login to Siebel assisted UI with Sales Calculator access.
-2. Navigate to Sales Calculator and open the Mobile PLP flow from quote context.
-3. Complete a valid add-to-cart action.
-4. Observe top notification region.
-5. Confirm Service added to cart state appears before steady cart state.
-6. Confirm user remains in Mobile PLP and can continue selection.
-7. Example values from SSJ.md/HLD: Use source examples only: Coverage address '10 Bourke St, Melbourne, 3000'; Customer name 'John Citizen'; Quote number '1234567890'; coverage results '4G - Available, 5G - Outdoor only, 5G NSA - Not available'.","- Service-added notification appears in the top message area.
+"TOM_09","Mobile PLP - Service added toast","Validate Service added to cart notification state","1. Open the Siebel Start URL and login with the assisted UI credentials.
+2. Open Application Menu and click Site Map.
+3. Filter the Site Map with 'Sales Cal'.
+4. Open the Sales calculator link.
+5. Fill First name and Last name in the Sales calculator customer form.
+6. Click Enter new customer details.
+7. In Address lookup Search, enter '177 pacific'.
+8. Select the suggested address result (codegen recorded '#ui-id-323').
+9. Wait for the customer-details/coverage-check page to finish loading; confirm the Coverage check area, network areas, and available network details are visible, then click Next.
+10. Open the Mobile phones tab.
+11. Complete a valid add-to-cart action using one compatible plan and one compatible device.
+12. Observe the top notification region.
+13. Confirm the Service added to cart state appears before the steady cart state.
+14. Confirm the user remains on Mobile PLP and can continue selection.","- Service-added notification appears in the top message area.
 - Message shown: ""Cart updated"".
 - User remains on Mobile PLP and can continue selection."
-"TOM_10","Mobile PLP - Add second service","Validate multi-service flow using Add new service","1. Login to Siebel assisted UI with Sales Calculator access.
-2. Navigate to Sales Calculator and open the Mobile PLP flow from quote context.
-3. After first service, click Add new service.
-4. Select second device and plan combination.
-5. Click Add to cart.
-6. Verify both New service 1 and New service 2 are displayed.
-7. Example values from SSJ.md/HLD: Use second service example: New service 2 'Large Plan Vodafone Handset MTM Plans Aug 2025' + 'iPhone 16 256GB Black'.","- Cart updated is shown after the second Add to cart action.
+"TOM_10","Mobile PLP - Add second service","Validate multi-service flow using Add new service","1. Open the Siebel Start URL and login with the assisted UI credentials.
+2. Open Application Menu and click Site Map.
+3. Filter the Site Map with 'Sales Cal'.
+4. Open the Sales calculator link.
+5. Fill First name and Last name in the Sales calculator customer form.
+6. Click Enter new customer details.
+7. In Address lookup Search, enter '177 pacific'.
+8. Select the suggested address result (codegen recorded '#ui-id-323').
+9. Wait for the customer-details/coverage-check page to finish loading; confirm the Coverage check area, network areas, and available network details are visible, then click Next.
+10. Open the Mobile phones tab.
+11. After the first service is added, click Add new service.
+12. Select a second compatible device and plan combination.
+13. Click Add to cart.
+14. Verify both New service 1 and New service 2 are displayed.","- Cart updated is shown after the second Add to cart action.
 - Changes have been made to your order successfully. is shown after the cart update.
 - New service 1 and New service 2 are both present, and New service 2 matches the selected plan/device."
 "TOM_11","Mobile PLP - Remove service","Validate remove single service action","1. Login to Siebel assisted UI with Sales Calculator access.
@@ -478,7 +542,7 @@
 3. Verify plan status changes to Selected.
 4. Observe device carousel refresh after plan selection.
 5. Confirm only compatible devices are shown as selectable.
-6. Example values from SSJ/HLD: plan-first use case, device attributes Storage 128GB, Colour Black.","- Selected state is applied to the chosen rate plan.
+6. Example values from SSJ.md/HLD: plan-first use case, device attributes Storage 128GB, Colour Black.","- Selected state is applied to the chosen rate plan.
 - Device carousel refreshes immediately after plan selection.
 - Only compatible devices are selectable; non-compatible devices are hidden or disabled."
 "TOM_53","Mobile PLP - Incompatible device block","Validate incompatible devices are not selectable after plan-first filtering","1. Login to Siebel assisted UI with Sales Calculator access.
@@ -486,7 +550,7 @@
 3. Identify a device outside the compatible set.
 4. Attempt to select the incompatible device.
 5. Verify selection is blocked and current compatible selection context remains unchanged.
-6. Example values from SSJ/HLD: use any non-matching device outside refreshed compatible list.","- Attempting to select a device outside the compatible set is blocked.
+6. Example values from SSJ.md/HLD: use any non-matching device outside refreshed compatible list.","- Attempting to select a device outside the compatible set is blocked.
 - Previously selected compatible plan remains selected after the blocked attempt.
 - No incompatible device is added to the current service context."
 "TOM_54","Mobile PLP - RTSA re-trigger storage change","Validate RTSA API re-triggers when device storage changes","1. Login to Siebel assisted UI and open Mobile phones tab.
@@ -494,7 +558,7 @@
 3. Observe initial stock state on a listed device.
 4. Change device storage (for example 128GB to another available capacity).
 5. Verify stock status refresh occurs for updated SKU.
-6. Example values from SSJ/HLD: Storage field and VHAGetStockAvailability trigger on capacity change.","- Changing storage triggers a fresh RTSA check for the updated SKU.
+6. Example values from SSJ.md/HLD: Storage field and VHAGetStockAvailability trigger on capacity change.","- Changing storage triggers a fresh RTSA check for the updated SKU.
 - Tile stock status refreshes to the returned state (for example In stock, Low Stock, Back-order, Out of Stock).
 - If returned state is Out of Stock/Non-Orderable, selection/add is blocked and ""Please select another colour/storage option"" is shown.
 - If returned state is purchasable, selection/add remains allowed."
@@ -503,7 +567,7 @@
 3. Select a device and change Colour value.
 4. Verify stock status refreshes for the changed colour SKU.
 5. Repeat colour change to another value and confirm second refresh.
-6. Example values from SSJ/HLD: Colour Black sample and RTSA trigger on colour change.","- Changing colour triggers a new RTSA request for the new colour SKU.
+6. Example values from SSJ.md/HLD: Colour Black sample and RTSA trigger on colour change.","- Changing colour triggers a new RTSA request for the new colour SKU.
 - Displayed stock status updates after each colour change.
 - Out-of-Stock/Non-Orderable colour blocks selection/add and shows ""Please select another colour/storage option"".
 - In-stock/allowed colour remains selectable for add-to-cart flow."
@@ -512,7 +576,7 @@
 3. Select Device A and note stock state.
 4. Change to Device B (or search and open a specific device).
 5. Verify stock state updates for new device SKU.
-6. Example values from SSJ/HLD: Search a device flow and RTSA trigger on specific device search/change.","- Switching from Device A to Device B triggers a fresh RTSA check for Device B SKU.
+6. Example values from SSJ.md/HLD: Search a device flow and RTSA trigger on specific device search/change.","- Switching from Device A to Device B triggers a fresh RTSA check for Device B SKU.
 - Displayed stock status for Device B is updated from the returned RTSA result.
 - Any stock warning/banner text for Device B is shown when returned.
 - Action on Device B is blocked or allowed in line with the returned stock state."
@@ -520,31 +584,31 @@
 2. Enter shipping suburb/postcode.
 3. Select a wearable tile and change Colour.
 4. Verify stock state refresh after colour change.
-5. Example values from SSJ/HLD: wearables attributes Colour, Case size, Band, Band size.","- Changing wearable colour triggers RTSA for the updated wearable SKU.
+5. Example values from SSJ.md/HLD: wearables attributes Colour, Case size, Band, Band size.","- Changing wearable colour triggers RTSA for the updated wearable SKU.
 - Tile stock status refreshes after the colour update.
 - Non-purchasable returned state blocks progression for that wearable variant.
 - Purchasable returned state allows continuation of selection flow."
-"TOM_58","Mobile PLP - Wearable RTSA re-trigger case size","Validate wearable RTSA re-triggers on case size change","1. Login and open Wearables tab.
+"TOM_58","Mobile PLP - Wearable RTSA re-trigger case size","Validate wearable RTSA re-triggers on case size change","1. Login and open Wearables tab in Mobile PLP.
 2. Provide shipping postcode context.
 3. Change selected wearable Case size.
 4. Verify stock state refresh occurs for updated wearable SKU.
-5. Example values from SSJ/HLD: Case size 42mm sample.","- Changing case size triggers RTSA for the new wearable SKU.
+5. Example values from SSJ.md/HLD: Case size 42mm sample.","- Changing case size triggers RTSA for the new wearable SKU.
 - Wearable tile stock status refreshes to the RTSA result.
 - Non-purchasable case-size variant is blocked from progression.
 - Purchasable case-size variant remains selectable."
-"TOM_59","Mobile PLP - Wearable RTSA re-trigger band","Validate wearable RTSA re-triggers on band change","1. Login and open Wearables tab.
+"TOM_59","Mobile PLP - Wearable RTSA re-trigger band","Validate wearable RTSA re-triggers on band change","1. Login and open Wearables tab in Mobile PLP.
 2. Provide delivery estimate context.
 3. Change wearable Band value.
 4. Verify stock/availability re-check occurs for changed combination.
-5. Example values from SSJ/HLD: Band Sport band.","- Changing band option triggers a fresh RTSA check for the updated wearable combination.
+5. Example values from SSJ.md/HLD: Band Sport band.","- Changing band option triggers a fresh RTSA check for the updated wearable combination.
 - Updated stock status is shown on the wearable tile after the band change.
 - Non-purchasable result blocks add/proceed for that variant.
 - Purchasable result allows continuation."
-"TOM_60","Mobile PLP - Wearable RTSA re-trigger band size","Validate wearable RTSA re-triggers on band size change","1. Login and open Wearables tab.
+"TOM_60","Mobile PLP - Wearable RTSA re-trigger band size","Validate wearable RTSA re-triggers on band size change","1. Login and open Wearables tab in Mobile PLP.
 2. Ensure postcode/suburb context is present.
 3. Change wearable Band size (for example S/M to another available option).
 4. Verify stock state refreshes for updated wearable SKU.
-5. Example values from SSJ/HLD: Band size S/M.","- Changing band size triggers RTSA for the updated wearable SKU.
+5. Example values from SSJ.md/HLD: Band size S/M.","- Changing band size triggers RTSA for the updated wearable SKU.
 - Stock label refreshes after the band-size change.
 - Non-purchasable band-size variant is blocked from progression.
 - Purchasable band-size variant remains selectable."
@@ -587,7 +651,7 @@
 3. Navigate carousel forward using right arrow.
 4. Navigate back using left arrow.
 5. Verify previously selected device/plan remains retained in current service context.
-6. Example values from SSJ/HLD: pagination arrows and 1 - 3 of 50 items behavior.","- Device and plan selected before pagination remain selected after moving forward and back.
+6. Example values from SSJ.md/HLD: pagination arrows and 1 - 3 of 50 items behavior.","- Device and plan selected before pagination remain selected after moving forward and back.
 - Item counter/page range updates on forward navigation and returns on backward navigation.
 - Current service context remains the same; no extra service row is created by pagination."
 "TOM_66","Mobile PLP - Filter persistence across pagination","Validate brand filter persists during pagination and back navigation","1. Login and open Mobile phones tab.
@@ -595,7 +659,7 @@
 3. Navigate pagination forward and backward.
 4. Perform one safe navigation action (open details/return) without clearing filter.
 5. Verify active brand filter remains applied and result set stays filtered.
-6. Example values from SSJ/HLD: Filter by brand Apple/Samsung/Google/Other.","- Selected brand filter (for example Apple) remains active after pagination forward/backward.
+6. Example values from SSJ.md/HLD: Filter by brand Apple/Samsung/Google/Other.","- Selected brand filter (for example Apple) remains active after pagination forward/backward.
 - Opening details and returning does not clear the active brand filter.
 - Only cards from the active brand remain visible until filter is reset."
 "TOM_67","Mobile PLP - Multiple plan selection to separate services","Validate multiple selected plans create separate services on Add to cart","1. Login and open Mobile PLP in plan-first mode.
@@ -603,7 +667,7 @@
 3. Click Add to cart.
 4. Verify each selected rate plan is added under separate service rows.
 5. Confirm service rows are independently editable.
-6. Example values from SSJ/HLD: New service 1 and New service 2 pattern.","- Cart updated is shown after Add to cart with multiple selected plans.
+6. Example values from SSJ.md/HLD: New service 1 and New service 2 pattern.","- Cart updated is shown after Add to cart with multiple selected plans.
 - Each selected plan is created as a separate New service row.
 - New service rows are independently editable via their own Edit actions."
 "TOM_68","Mobile PLP - Wearables prerequisite validation","Validate wearables selection is blocked until device/plan prerequisite is met","1. Login and open Mobile PLP with no device and no plan selected.
@@ -619,7 +683,7 @@
 3. Verify prerequisite validation appears above tabs.
 4. Select valid device and plan.
 5. Re-open Accessories and verify selection can proceed.
-6. Example values from SSJ/HLD: Accessories tab and APP payment term 36 months context.","- Validation message ""Please select plan or device."" is shown on accessories attempt.
+6. Example values from SSJ.md/HLD: Accessories tab and APP payment term 36 months context.","- Validation message ""Please select plan or device."" is shown on accessories attempt.
 - Accessories selection is blocked until device and plan are selected.
 - Accessories selection becomes enabled after prerequisites are met."
 "TOM_70","Mobile PLP - Device care prerequisite validation","Validate device care cannot be selected before a device is selected","1. Login and open Mobile PLP.
@@ -636,6 +700,6 @@
 4. Click Resume Quote.
 5. Verify resume opens device/plan listing page for same quote context.
 6. Verify all previously saved selections persist (device, plan, wearables, accessories, quantities, delivery context).
-7. Example values from SSJ/HLD: New service entries such as iPhone 15 Pro Max 128GB Black and quoted customer John Citizen.","- Changes have been made to your order successfully. is displayed on save.
+7. Example values from SSJ.md/HLD: New service entries such as iPhone 15 Pro Max 128GB Black and quoted customer John Citizen.","- Changes have been made to your order successfully. is displayed on save.
 - Saved quote is found in Search all quotes with expected status (Quote Submitted or Quote In Progress as applicable).
 - Resume Quote opens the same quote context and restores device, plan, wearables, accessories, quantities, and delivery values."

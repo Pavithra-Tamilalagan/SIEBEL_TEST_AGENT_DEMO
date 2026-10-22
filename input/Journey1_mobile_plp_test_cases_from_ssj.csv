@@ -129,12 +129,15 @@
 8. Select the suggested address result (codegen recorded '#ui-id-323').
 9. Wait for the customer-details/coverage-check page to finish loading; confirm the Coverage check area, network areas, and available network details are visible, then click Next.
 10. Open the Mobile phones tab.
-11. Select one compatible device tile and one compatible plan tile.
-12. Optionally populate delivery using Same as coverage check when it is enabled.
-13. Click Add to cart.
-14. Verify a new service row is created in New services with the selected device and plan.","- Message shown: ""Cart updated"".
+11. Select one compatible device tile first.
+12. Verify the selected device state changes to Selected.
+13. Verify the plans list refreshes for compatible plans and only compatible plans remain selectable.
+14. Select one compatible plan tile.
+15. Verify the selected plan state changes to Selected.
+16. Click Add to cart.
+17. Verify a new service row is created in New services with the selected device and plan.","- Message shown: ""Cart updated"".
 - Message shown: ""Changes have been made to your order successfully."".
-- A new service row is created with Edit controls."
+- A new service row is created with the selected device and plan in New services."
 "TOM_09","Mobile PLP - Service added toast","Validate Service added to cart notification state","1. Open the Siebel Start URL and login with the assisted UI credentials.
 2. Open Application Menu and click Site Map.
 3. Filter the Site Map with 'Sales Cal'.

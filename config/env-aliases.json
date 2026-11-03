@@ -1,0 +1,9 @@
+{
+  "_comment": "Maps a data-sheet key (left) to fallback environment variable names (right). Used when the data sheet value is '.env:KEY' and KEY is not set. Edit this file instead of code.",
+  "ENV_URL": ["BASE_URL"],
+  "ENV_USERNAME": ["SIEBEL_USERNAME"],
+  "ENV_PASSWORD": ["SIEBEL_PASSWORD"],
+  "CUSTOMER_FIRST_NAME": ["FIRST_NAME"],
+  "CUSTOMER_LAST_NAME": ["LAST_NAME"],
+  "ADDRESS_SEARCH": ["ADDRESS"]
+}

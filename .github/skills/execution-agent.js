@@ -273,12 +273,27 @@ async function buildExecutionCase(testCaseId, inputFilePath) {
     match = all.find((t) => String(t.TOM_NUM).replace(/^TOM_0*/i, '').replace(/^0+/, '') === idNormalized);
   }
   if (!match) throw new Error(`Test case '${testCaseId}' not found in input`);
-  const steps = Array.isArray(match.steps) ? match.steps : splitAndCleanSteps(match.Order_Steps || match.Order_Steps || '');
+  // Data-driven: resolve every {{PARAM}} in steps/validations from the Test Data Sheet
+  const { loadTestDataForTom, resolveTestCase } = require('./test-data-loader');
+  const { file: dataFile, data } = await loadTestDataForTom(match.TOM_NUM || testCaseId);
+  for (const [k, v] of Object.entries(data)) process.env[k] = v;
+  process.env.TEST_DATA_JSON = JSON.stringify(data);
+  const { testCase: resolved, missing } = resolveTestCase(match, data);
+  console.log('TEST_DATA_FILE:', dataFile || 'none');
+  console.log('TEST_DATA_PARAMS:', JSON.stringify(Object.keys(data)));
+  if (missing.length) {
+    const strict = String(process.env.STRICT_TEST_DATA || 'true').toLowerCase() !== 'false';
+    const msg = `Missing test data for ${match.TOM_NUM}: ${missing.join(', ')}`;
+    if (strict) throw new Error(msg);
+    console.log('WARNING:', msg);
+  }
+  const steps = Array.isArray(resolved.steps) ? resolved.steps : splitAndCleanSteps(resolved.Order_Steps || '');
   return {
-    testCaseId: match.TOM_NUM || testCaseId,
-    userJourney: match.User_Journey,
+    testCaseId: resolved.TOM_NUM || testCaseId,
+    userJourney: resolved.User_Journey,
     steps: steps,
-    postVerification: match.Post_Verification || match.PostVerification || ''
+    postVerification: resolved.Post_Verification || resolved.PostVerification || '',
+    testData: data
   };
 }
 
@@ -290,13 +305,14 @@ async function runExecutionCase(testCaseId = 'TOM_01', inputFilePath) {
 async function runExecutionCaseFromCase(executionCase) {
   const artifactManager = await createArtifactManager(executionCase.testCaseId);
   process.env.CURRENT_TESTCASE_ID = String(executionCase.testCaseId || '');
-  process.env.EXPECT_ADD_TO_CART_VALIDATION = /^(TOM_04|TOM_05)$/i.test(String(executionCase.testCaseId || '')) ? 'true' : 'false';
-  const tomMatch = String(executionCase.testCaseId || '').match(/^TOM_0*([0-9]+)$/i);
-  const tomNum = tomMatch ? Number(tomMatch[1]) : NaN;
-  const inMobileRange = Number.isFinite(tomNum) && tomNum >= 1 && tomNum <= 58;
+  // Negative add-to-cart validation is inferred from the CSV, not the TOM id
+  const _stepsText = (executionCase.steps || []).join('\n');
+  const _pv = String(executionCase.postVerification || '');
+  const expectsBlockedAddToCart = /add to cart/i.test(_stepsText) && !/cart updated/i.test(_pv) && /not added|no row is added|blocked|please select/i.test(_pv);
+  process.env.EXPECT_ADD_TO_CART_VALIDATION = expectsBlockedAddToCart ? 'true' : 'false';
   const launchOptions = getBrowserLaunchOptions();
-  const allowHeadlessMobile = String(process.env.EXECUTION_AGENT_ALLOW_HEADLESS_MOBILE || 'false').toLowerCase() === 'true';
-  if (inMobileRange && launchOptions.headless && !allowHeadlessMobile) {
+  const forceHeaded = String(process.env.EXECUTION_AGENT_ALLOW_HEADLESS_MOBILE || 'false').toLowerCase() !== 'true';
+  if (forceHeaded && launchOptions.headless) {
     launchOptions.headless = false;
     launchOptions.args = ['--start-maximized', '--no-first-run', '--no-default-browser-check', '--disable-background-networking'];
     console.log('Forcing headed browser for mobile execution because local Siebel navigation is unstable in headless mode.');
@@ -471,7 +487,9 @@ async function runExecutionCaseFromCase(executionCase) {
       'mobile-plp': path.resolve(artifactManager.paths.screenshotDir, `${executionCase.testCaseId}-stage-mobile-plp.png`)
     };
 
-    if (inMobileRange && launchMobilePLP) {
+    // Inferred from the CSV steps (not TOM number): run shared precondition when the steps include the sales-calculator/address flow
+    const usesPreconditionFlow = /sales calculator|address lookup|coverage check/i.test(stepsToExecute.join('\n'));
+    if (usesPreconditionFlow && launchMobilePLP) {
       console.log('Invoking shared launchMobilePLP() helper for', executionCase.testCaseId);
       try {
         page = await resolveActivePage(context, page);
@@ -729,7 +747,7 @@ async function runExecutionCaseFromCase(executionCase) {
 
         const hasVisibleRow = rowTexts.length > 0;
         const rowTextSummary = rowTexts.slice(0, 5).join(' | ');
-        const deviceOrPlanMentioned = rowTexts.some((text) => /device|plan|selected|iphone|vodafone|5g|4g|mobile|care/i.test(text));
+        const deviceOrPlanMentioned = rowTexts.some((text) => /device|plan|selected|mobile|care/i.test(text) || Object.values(JSON.parse(process.env.TEST_DATA_JSON || '{}')).some((v) => v && String(v).length > 3 && text.toLowerCase().includes(String(v).toLowerCase())));
         const normalizedSuccessText = bodyText.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
         const result = {
@@ -815,7 +833,9 @@ async function runExecutionCaseFromCase(executionCase) {
             results.push(item); continue;
           }
 
-          if (/apple.*device card|device card.*apple|visible device card.*stock state.*price.*select/i.test(l)) {
+          const _brand = String(process.env.BRAND_FILTER || '').trim();
+          const _brandRx = _brand ? new RegExp(_brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i') : null;
+          if (/device card.*(stock state|price|select)|(every|visible) device card/i.test(l)) {
             let selectVisible = false;
             try {
               selectVisible = (await page.getByRole('button', { name: /^Select$/i }).count()) > 0;
@@ -841,19 +861,19 @@ async function runExecutionCaseFromCase(executionCase) {
               attributeVisible = (await page.getByText(/Storage|Colour|Payment term|Device care/i).count()) > 0;
             } catch (e) {}
 
-            let appleVisible = true;
-            if (/apple/i.test(l)) {
+            let brandVisible = true;
+            if (_brandRx && _brandRx.test(l)) {
               try {
-                appleVisible = (await page.getByText(/Apple/i).count()) > 0;
+                brandVisible = (await page.getByText(_brandRx).count()) > 0;
               } catch (e) {
-                appleVisible = false;
+                brandVisible = false;
               }
             }
 
-            item.actual = `select=${selectVisible ? 'yes' : 'no'}; price=${priceVisible ? 'yes' : 'no'}; stock=${stockVisible ? 'yes' : 'no'}; attributes=${attributeVisible ? 'yes' : 'no'}; apple=${appleVisible ? 'yes' : 'no'}`;
-            if (!selectVisible || !priceVisible || !stockVisible || !attributeVisible || !appleVisible) {
+            item.actual = `select=${selectVisible ? 'yes' : 'no'}; price=${priceVisible ? 'yes' : 'no'}; stock=${stockVisible ? 'yes' : 'no'}; attributes=${attributeVisible ? 'yes' : 'no'}; brand(${_brand || 'n/a'})=${brandVisible ? 'yes' : 'no'}`;
+            if (!selectVisible || !priceVisible || !stockVisible || !attributeVisible || !brandVisible) {
               item.status = 'FAIL';
-              item.failure_reason = 'Expected Apple device card details were not fully visible';
+              item.failure_reason = `Expected ${_brand || ''} device card details were not fully visible`.trim();
             }
             results.push(item); continue;
           }

@@ -351,7 +351,9 @@ async function runFullAutomation(testCaseId = '', inputFilePath, options = {}) {
         const nodePath = process.execPath;
         const execAgent = path.resolve(__dirname, 'execution-agent.js');
         await appendOrchLog('[STEP 3] Execution Started for ' + normalizedTestCaseId);
-        const execProc = spawnSync(nodePath, [execAgent, normalizedTestCaseId, resolvedInput], { encoding: 'utf8' });
+        const tomData = await require('./test-data-loader').buildEnvForTom(normalizedTestCaseId);
+        await appendOrchLog(`[STEP 3] Test data (${tomData.file || 'none'}) keys: ${Object.keys(tomData.data).join(', ')}`);
+        const execProc = spawnSync(nodePath, [execAgent, normalizedTestCaseId, resolvedInput], { encoding: 'utf8', env: tomData.env });
         const capturedExec = captureProcOutput('execution-agent', execProc);
         await appendOrchLog(`[STEP 3] execution-agent stdout:\n${capturedExec.out}`);
         if (capturedExec.err) await appendOrchLog(`[STEP 3] execution-agent stderr:\n${capturedExec.err}`);
@@ -515,7 +517,9 @@ async function runFullAutomation(testCaseId = '', inputFilePath, options = {}) {
             const startTime = Date.now();
             const execAgent = path.resolve(__dirname, 'execution-agent.js');
             await appendOrchLog('[STEP 3] Execution Started for ' + caseId);
-            const execProc = spawnSync(nodePath, [execAgent, caseId, resolvedInput], { encoding: 'utf8' });
+            const tomData = await require('./test-data-loader').buildEnvForTom(caseId);
+            await appendOrchLog(`[STEP 3] Test data (${tomData.file || 'none'}) keys: ${Object.keys(tomData.data).join(', ')}`);
+            const execProc = spawnSync(nodePath, [execAgent, caseId, resolvedInput], { encoding: 'utf8', env: tomData.env });
             const capturedExec = captureProcOutput('execution-agent', execProc);
             await appendOrchLog(`[STEP 3] execution-agent stdout for ${caseId}:\n${capturedExec.out}`);
             if (capturedExec.err) await appendOrchLog(`[STEP 3] execution-agent stderr for ${caseId}:\n${capturedExec.err}`);

@@ -1,6 +1,118 @@
 const fs = require('fs/promises');
 const path = require('path');
 const ExcelJS = require('exceljs');
+try { require('dotenv').config({ path: path.resolve(__dirname, '..', '..', '.env.local'), quiet: true }); } catch (e) { /* optional */ }
+
+function cellText(v) {
+    if (v === undefined || v === null) return '';
+    if (typeof v === 'object') {
+        if (v.richText) return v.richText.map((t) => t.text).join('');
+        if (v.text !== undefined) return String(v.text);
+        if (v.result !== undefined) return String(v.result);
+    }
+    return String(v);
+}
+
+/**
+ * Locate the test-data workbook. Priority: TEST_DATA_XLSX env var, then any
+ * input/*Data*.xlsx file (excluding result workbooks).
+ */
+async function findTestDataWorkbook(inputDir) {
+    if (process.env.TEST_DATA_XLSX) {
+        const p = path.resolve(inputDir, path.basename(process.env.TEST_DATA_XLSX));
+        try { await fs.access(p); return p; } catch { /* fall through */ }
+    }
+    try {
+        const files = await fs.readdir(inputDir);
+        const hit = files.find((f) => /data/i.test(f) && /\.xlsx$/i.test(f) && !/result/i.test(f) && !f.startsWith('~$'));
+        return hit ? path.resolve(inputDir, hit) : null;
+    } catch {
+        return null;
+    }
+}
+
+const ENV_ALIASES = {
+    ENV_URL: ['BASE_URL'],
+    ENV_USERNAME: ['SIEBEL_USERNAME'],
+    ENV_PASSWORD: ['SIEBEL_PASSWORD'],
+    CUSTOMER_FIRST_NAME: ['FIRST_NAME'],
+    CUSTOMER_LAST_NAME: ['LAST_NAME']
+};
+// Credentials/URL stay as {{TOKENS}} in step text so they are never written to logs/JSON;
+// the generator's login block reads them from the environment at runtime.
+const SECRET_TOKENS = /^(ENV_URL|ENV_USERNAME|ENV_PASSWORD)$/;
+
+function resolveDataValue(raw) {
+    const value = cellText(raw).trim();
+    const envRef = value.match(/^\.env:(\w+)$/i);
+    if (envRef) {
+        const keys = [envRef[1], ...(ENV_ALIASES[envRef[1]] || [])];
+        const hit = keys.find((k) => process.env[k] !== undefined && process.env[k] !== '');
+        return hit ? process.env[hit] : undefined;
+    }
+    return value;
+}
+
+function sheetRows(ws) {
+    if (!ws) return [];
+    const headers = [];
+    ws.getRow(1).eachCell((cell, c) => { headers[c] = cellText(cell.value).trim(); });
+    const rows = [];
+    for (let r = 2; r <= ws.rowCount; r += 1) {
+        const row = ws.getRow(r);
+        const obj = {};
+        headers.forEach((h, c) => { if (h) obj[h] = row.getCell(c).value; });
+        rows.push(obj);
+    }
+    return rows;
+}
+
+/**
+ * Load data workbook into { common: {PARAM: value}, perTom: {TOM_NN: {PARAM: value}} }.
+ * Sheets used: Parameter_Dictionary (defaults), Common_Parameters, TOM_Data (per TOM, highest priority).
+ */
+async function loadTestData(inputDir) {
+    const file = await findTestDataWorkbook(inputDir);
+    if (!file) return null;
+    const wb = new ExcelJS.Workbook();
+    await wb.xlsx.readFile(file);
+    const common = {};
+    const perTom = {};
+    const put = (target, param, raw) => {
+        const key = cellText(param).trim();
+        if (!key) return;
+        const val = resolveDataValue(raw);
+        if (val === undefined || val === '' || /^<.*>$/.test(val)) return;
+        target[key] = val;
+    };
+    for (const r of sheetRows(wb.getWorksheet('Parameter_Dictionary'))) put(common, r.PARAMETER, r.VALUE);
+    for (const r of sheetRows(wb.getWorksheet('Common_Parameters'))) put(common, r.PARAMETER, r.VALUE);
+    for (const r of sheetRows(wb.getWorksheet('TOM_Data'))) {
+        const tom = cellText(r.TOM_NUM).trim().toUpperCase();
+        if (!tom) continue;
+        perTom[tom] = perTom[tom] || {};
+        put(perTom[tom], r.PARAMETER, r.VALUE);
+    }
+    return { file, common, perTom };
+}
+
+function applyTestData(testcases, data) {
+    if (!data) return testcases;
+    return testcases.map((tc) => {
+        const values = { ...data.common, ...(data.perTom[String(tc.TOM_NUM).toUpperCase()] || {}) };
+        for (const k of Object.keys(values)) if (SECRET_TOKENS.test(k)) delete values[k];
+        const sub = (text) => String(text || '').replace(/\{\{\s*([A-Za-z0-9_]+)\s*\}\}/g, (m, key) => (
+            Object.prototype.hasOwnProperty.call(values, key) ? values[key] : m
+        ));
+        const unresolved = [...new Set(`${tc.Order_Steps}\n${tc.Post_Verification}`.match(/\{\{\s*[A-Za-z0-9_]+\s*\}\}/g) || [])]
+            .map((t) => t.replace(/[{}\s]/g, ''))
+            .filter((k) => !SECRET_TOKENS.test(k) && !Object.prototype.hasOwnProperty.call(values, k));
+        if (unresolved.length) {
+            process.stderr.write(`[input-agent] ${tc.TOM_NUM}: unresolved data tokens ${unresolved.join(', ')}\n`);
+        }
+        return { ...tc, Order_Steps: sub(tc.Order_Steps), Post_Verification: sub(tc.Post_Verification) };
+    });
+}
 
 const REQUIRED_COLUMNS = [
     'TOM_NUM',
@@ -126,13 +238,13 @@ async function readInputTestcases(csvFilePath) {
             parsedRows.push(values);
         });
 
-        return buildTestcaseJson(parsedRows);
+        return applyTestData(buildTestcaseJson(parsedRows), await loadTestData(inputDir));
     }
 
     // Default: treat as CSV
     const csvContent = await fs.readFile(resolvedPath, 'utf8');
     const parsedRows = parseCsv(csvContent);
-    return buildTestcaseJson(parsedRows);
+    return applyTestData(buildTestcaseJson(parsedRows), await loadTestData(inputDir));
 }
 
 /**
@@ -157,7 +269,9 @@ module.exports = {
     readInputTestcases,
     parseCsv,
     buildTestcaseJson,
-    getTestCasesByJourney
+    getTestCasesByJourney,
+    loadTestData,
+    applyTestData
 };
 
 if (require.main === module) {

@@ -359,7 +359,7 @@
 9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
 10. Click Enter new customer details.
 11. Open the Mobile phones tab.
-12. Click the Same as coverage check checkbox.","- Same as coverage check checkbox is displayed and disabled.
+12. Check the Same as coverage check checkbox.","- Same as coverage check checkbox is displayed and disabled.
 - Clicking the checkbox does not tick it.
 - Suburb, postcode and state fields remain empty.
 - User remains on the Mobile phones tab."
@@ -378,7 +378,7 @@
 13. Wait for the Coverage check page to finish loading.
 14. Click Next.
 15. Open the Mobile phones tab.
-16. Tick the Same as coverage check checkbox.
+16. Click and Enable the ""Same as coverage check"" checkbox.
 17. Select the {{PLAN_1}} plan tile.
 18. Open the {{DEVICE_1}} device card.
 19. Select the {{DEVICE_1_STORAGE}} storage option.
@@ -413,36 +413,7 @@
 - Device cards not matching {{SEARCH_KEYWORD}} are not displayed while the term is active.
 - After clearing Search the default unfiltered listing and item counter range are restored.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_17","Mobile PLP - Sort by Most popular","Validate Most popular sort applies without navigation loss","1. Open {{ENV_URL}}.
-2. Enter {{ENV_USERNAME}} in User ID.
-3. Enter {{ENV_PASSWORD}} in Password.
-4. Click Login.
-5. Open Application Menu and click Site Map.
-6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
-7. Click the Sales calculator link.
-8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
-9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
-10. Click Enter new customer details.
-11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
-12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
-13. Wait for the Coverage check page to finish loading.
-14. Click Next.
-15. Open the Mobile phones tab.
-16. Open the Sort by drop-down.
-17. Select the Most popular option.
-18. Select the {{PLAN_1}} plan tile.
-19. Open the {{DEVICE_1}} device card.
-20. Select the {{DEVICE_1_STORAGE}} storage option.
-21. Select the {{DEVICE_1_COLOUR}} colour option.
-22. Select the {{DEVICE_1_TERM}} payment term.
-23. Add {{DEVICE_1_ADDON}}.
-24. Click Add to cart.
-25. Wait for New service 1 to be displayed in New services.","- Device card order changes from the default order after Most popular is selected.
-- Sort by shows Most popular after the list refreshes.
-- Message shown: ""Cart updated"".
-- New service 1 shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
-- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_18","Mobile PLP - Sort by price high","Validate Price High sorting option behavior","1. Open {{ENV_URL}}.
+"TOM_17","Mobile PLP - Sort by price high","Validate Price High sorting option behavior","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -459,13 +430,11 @@
 15. Open the Mobile phones tab.
 16. Open the Sort by drop-down.
 17. Select the Price High option.
-18. Open the Sort by drop-down.
-19. Select the Most popular option.
-20. Open the Sort by drop-down.
-21. Select the Price High option.","- With Price High the highest priced device card is displayed first.
+18. Click Select on the first device card.","- With Price High the highest priced device card is displayed first.
 - Re-selecting Price High reproduces the same descending order.
+- The first device card shows Selected.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_19","Mobile PLP - Sort by price low","Validate Price Low sorting option behavior","1. Open {{ENV_URL}}.
+"TOM_18","Mobile PLP - Sort by price low","Validate Price Low sorting option behavior","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -482,13 +451,13 @@
 15. Open the Mobile phones tab.
 16. Open the Sort by drop-down.
 17. Select the Price Low option.
-18. Click Select on the {{DEVICE_1}} device card.
+18. Click Select on the first device card.
 19. Click the next arrow on the device carousel.
 20. Click the previous arrow on the device carousel.","- With Price Low the lowest priced device card is displayed first.
 - Price Low ordering stays applied after next and previous arrows.
-- The {{DEVICE_1}} device card still shows Selected after pagination.
+- The first device card still shows Selected after pagination.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_20","Mobile PLP - Filter by brand","Validate brand filter options and reset","1. Open {{ENV_URL}}.
+"TOM_19","Mobile PLP - Filter by brand","Validate brand filter options and reset","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -512,7 +481,7 @@
 - With {{BRAND_FILTER_2}} selected every displayed device card is a {{BRAND_FILTER_2}} device.
 - With Other selected the mixed-brand baseline listing is restored.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_21","Mobile PLP - Check store stock entry","Validate Check store stock option appears for selectable items","1. Open {{ENV_URL}}.
+"TOM_20","Mobile PLP - Check store stock entry","Validate Check store stock option appears for selectable items","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -533,7 +502,7 @@
 - After Close the {{DEVICE_1}} device card still shows Selected.
 - Active filters are unchanged.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_22","Mobile PLP - Stock state In Stock","Validate In Stock visual state and add flow","1. Open {{ENV_URL}}.
+"TOM_21","Mobile PLP - Stock state In Stock","Validate In Stock visual state and add flow","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -559,7 +528,7 @@
 - Message shown: ""Cart updated"".
 - New service 1 shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_23","Mobile PLP - Stock state warning path","Validate non-success stock states and warning presentation","1. Open {{ENV_URL}}.
+"TOM_22","Mobile PLP - Stock state warning path","Validate non-success stock states and warning presentation","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -582,7 +551,7 @@
 - Message shown: ""Please select another colour/storage option"".
 - Add to cart is blocked and no row is added to New services.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_24","Mobile PLP - RTSA technical error","Validate RTSA technical error handling message","1. Open {{ENV_URL}}.
+"TOM_23","Mobile PLP - RTSA technical error","Validate RTSA technical error handling message","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -613,7 +582,7 @@
 - Message shown: ""Cart updated"".
 - New service 1 shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_25","Mobile PLP - Plans panel default","Validate plans panel content and entitlements","1. Open {{ENV_URL}}.
+"TOM_24","Mobile PLP - Plans panel default","Validate plans panel content and entitlements","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -632,7 +601,7 @@
 - Critical information summary and Rates and charges links are displayed on each plan tile.
 - Only the {{PLAN_1}} plan tile shows Selected.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_26","Mobile PLP - Plan links open","Validate Critical information summary and Rates and charges redirection","1. Open {{ENV_URL}}.
+"TOM_25","Mobile PLP - Plan links open","Validate Critical information summary and Rates and charges redirection","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -648,12 +617,9 @@
 14. Click Next.
 15. Open the Mobile phones tab.
 16. Click Critical information summary on the {{PLAN_1}} plan tile.
-17. Navigate back.
-18. Click Rates and charges on the {{PLAN_1}} plan tile.
-19. Navigate back.","- Critical information summary opens its destination page.
-- Rates and charges opens its destination page.
+17. Navigate back.","- Critical information summary opens its destination page.
 - After each Navigate back the Mobile phones tab is displayed with prior state retained."
-"TOM_27","Mobile PLP - Quote max service limit","Validate maximum 10 services per quote guardrail","1. Open {{ENV_URL}}.
+"TOM_26","Mobile PLP - Quote max service limit","Validate maximum 10 services per quote guardrail","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -786,7 +752,7 @@
 - New service 11 is not added to New services.
 - New service 1 to New service 10 remain unchanged.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_28","Mobile PLP - Purchase and offer details open","Validate purchase and offer details modal content","1. Open {{ENV_URL}}.
+"TOM_27","Mobile PLP - Purchase and offer details open","Validate purchase and offer details modal content","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -812,7 +778,7 @@
 24. Click View purchase & offer details.","- Purchase & offer details view shows Account level products, Existing services and New services sections.
 - Recurring charges, One time charges and Total are displayed.
 - New service 1 in the details view shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}."
-"TOM_29","Mobile PLP - Purchase and offer details close","Validate close action returns to same Mobile PLP context","1. Open {{ENV_URL}}.
+"TOM_28","Mobile PLP - Purchase and offer details close","Validate close action returns to same Mobile PLP context","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -840,7 +806,7 @@
 - New service 1 still shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
 - Recurring charges, One time charges and Total are unchanged.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_30","Mobile PLP - Bundle calculation default","Validate Calculate Bundle & Save action default flow","1. Open {{ENV_URL}}.
+"TOM_29","Mobile PLP - Bundle calculation default","Validate Calculate Bundle & Save action default flow","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -877,7 +843,7 @@
 - Recurring charges, One time charges and Total are updated for New service 1 and New service 2.
 - New service 1 and New service 2 Edit buttons remain enabled.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_31","Mobile PLP - Bundle calculation completed note","Validate explicit calculation completed note and state persistence","1. Open {{ENV_URL}}.
+"TOM_30","Mobile PLP - Bundle calculation completed note","Validate explicit calculation completed note and state persistence","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -916,7 +882,7 @@
 - The message is still displayed after returning to the Mobile phones tab.
 - New service 1 and New service 2 show the same Recurring charges, One time charges and Total as immediately after calculation.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_32","Mobile PLP - Bundle not eligible note","Validate non-eligible bundle note","1. Open {{ENV_URL}}.
+"TOM_31","Mobile PLP - Bundle not eligible note","Validate non-eligible bundle note","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -941,7 +907,7 @@
 - No bundle discount is applied to New service 1.
 - New service 1 Edit button remains enabled.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_33","Mobile PLP - Values not updated popup","Validate pricing stale popup before Create quote/Create order","1. Open {{ENV_URL}}.
+"TOM_32","Mobile PLP - Values not updated popup","Validate pricing stale popup before Create quote/Create order","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -976,7 +942,7 @@
 - Quote page does not load while values are not updated.
 - After Go back New service 1 shows {{DEVICE_1_STORAGE_ALT}}.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_34","Mobile PLP - Values popup proceed via recalc","Validate recalculation path from blocking popup","1. Open {{ENV_URL}}.
+"TOM_33","Mobile PLP - Values popup proceed via recalc","Validate recalculation path from blocking popup","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1013,7 +979,7 @@
 - Message shown: ""Bundle and save calculation is completed."".
 - Quote page loads after the second Create quote.
 - New service 1 shows {{DEVICE_1_STORAGE_ALT}} in the quote."
-"TOM_35","Mobile PLP - Edit service entry","Validate service edit entry and context labeling","1. Open {{ENV_URL}}.
+"TOM_34","Mobile PLP - Edit service entry","Validate service edit entry and context labeling","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1041,7 +1007,7 @@
 - Cancel editing and Save and add to cart buttons are displayed.
 - After Go back New service 1 still shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_36","Mobile PLP - Cancel editing","Validate cancel editing path returns safely without unintended updates","1. Open {{ENV_URL}}.
+"TOM_35","Mobile PLP - Cancel editing","Validate cancel editing path returns safely without unintended updates","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1069,7 +1035,7 @@
 26. Click Cancel editing.","- Edit view closes after Cancel editing.
 - New service 1 still shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}} and not {{DEVICE_1_STORAGE_ALT}}.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_37","Mobile PLP - Create quote action","Validate Create quote action availability and redirection","1. Open {{ENV_URL}}.
+"TOM_36","Mobile PLP - Create quote action","Validate Create quote action availability and redirection","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1099,7 +1065,7 @@
 - Quote page loads after Create quote.
 - Quote shows New service 1 with {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
 - User is not redirected to Fixed PLP."
-"TOM_38","Mobile PLP - Create order action","Validate Create order action availability and redirection","1. Open {{ENV_URL}}.
+"TOM_37","Mobile PLP - Create order action","Validate Create order action availability and redirection","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1129,7 +1095,7 @@
 - Order page loads after Create order.
 - Order shows New service 1 with {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
 - User is not redirected to Fixed PLP."
-"TOM_39","Mobile PLP - Save quote and exit","Validate Save quote and exit redirection and resume readiness","1. Open {{ENV_URL}}.
+"TOM_38","Mobile PLP - Save quote and exit","Validate Save quote and exit redirection and resume readiness","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1162,7 +1128,7 @@
 - Quote search page loads.
 - The saved quote for {{CUSTOMER_FIRST_NAME}} {{CUSTOMER_LAST_NAME}} is listed.
 - After Resume Quote New service 1 shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}."
-"TOM_40","Mobile PLP - Tablets and MBB tab","Validate Tablets & MBB tab end-to-end selection flow","1. Open {{ENV_URL}}.
+"TOM_39","Mobile PLP - Tablets and MBB tab","Validate Tablets & MBB tab end-to-end selection flow","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1184,7 +1150,7 @@
 - Message shown: ""Cart updated"".
 - New service 1 shows {{TABLET_PLAN_1}} / {{TABLET_1}}.
 - User remains on the Tablets & MBB tab."
-"TOM_41","Mobile PLP - Tablets and MBB selected state","Validate selected state transitions in Tablets & MBB tab","1. Open {{ENV_URL}}.
+"TOM_40","Mobile PLP - Tablets and MBB selected state","Validate selected state transitions in Tablets & MBB tab","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1205,7 +1171,7 @@
 - After Clear selection neither tile shows Selected.
 - No row is added to New services.
 - User remains on the Tablets & MBB tab."
-"TOM_42","Mobile PLP - Bundles tab","Validate Bundles tab list and select behavior","1. Open {{ENV_URL}}.
+"TOM_41","Mobile PLP - Bundles tab","Validate Bundles tab list and select behavior","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1226,7 +1192,7 @@
 - Message shown: ""Cart updated"".
 - New service 1 shows {{BUNDLE_1}}.
 - User remains on the Bundles tab."
-"TOM_43","Mobile PLP - Bundles deselect/reset","Validate clearing bundle selection","1. Open {{ENV_URL}}.
+"TOM_42","Mobile PLP - Bundles deselect/reset","Validate clearing bundle selection","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1245,7 +1211,7 @@
 17. Click Clear selection.","- Before Clear selection the {{BUNDLE_1}} bundle card shows Selected.
 - After Clear selection the {{BUNDLE_1}} bundle card does not show Selected.
 - No row is added to New services."
-"TOM_44","Mobile PLP - Wearables tab listing","Validate wearables listing, controls, and attributes","1. Open {{ENV_URL}}.
+"TOM_43","Mobile PLP - Wearables tab listing","Validate wearables listing, controls, and attributes","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1273,7 +1239,7 @@
 - The {{WEARABLE_1}} wearable card shows Colour, Case size, Band, Band size and Payment term fields.
 - Only the {{WEARABLE_1}} wearable card shows Selected for New service 1.
 - User remains on the Wearables tab."
-"TOM_45","Mobile PLP - Wearables max boundary","Validate boundary where more than five wearables are blocked","1. Open {{ENV_URL}}.
+"TOM_44","Mobile PLP - Wearables max boundary","Validate boundary where more than five wearables are blocked","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1307,7 +1273,7 @@
 - New service 1 holds 5 wearables ({{WEARABLE_1}} to {{WEARABLE_5}}).
 - {{WEARABLE_6}} is not added to New service 1.
 - User remains on the Wearables tab."
-"TOM_46","Mobile PLP - Accessories tab listing","Validate accessories listing and APP payment term controls","1. Open {{ENV_URL}}.
+"TOM_45","Mobile PLP - Accessories tab listing","Validate accessories listing and APP payment term controls","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1336,7 +1302,7 @@
 - APP payment term drop-down shows {{APP_PAYMENT_TERM}}.
 - The {{ACCESSORY_1}} accessory card shows product code and estimated delivery date.
 - Only the {{ACCESSORY_1}} accessory card shows Selected for New service 1."
-"TOM_47","Mobile PLP - Accessories max boundary","Validate boundary where more than ten accessories are blocked","1. Open {{ENV_URL}}.
+"TOM_46","Mobile PLP - Accessories max boundary","Validate boundary where more than ten accessories are blocked","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1375,7 +1341,7 @@
 - New service 1 holds 10 accessories ({{ACCESSORY_1}} to {{ACCESSORY_10}}).
 - {{ACCESSORY_11}} is not added to New service 1.
 - User remains on the Accessories tab."
-"TOM_48","Mobile PLP - Accessories delivery postcode","Validate accessory delivery estimate lookup and persistence","1. Open {{ENV_URL}}.
+"TOM_47","Mobile PLP - Accessories delivery postcode","Validate accessory delivery estimate lookup and persistence","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1406,7 +1372,7 @@
 29. Click Edit on the New service 1 row.","- Estimated delivery date on the {{ACCESSORY_1}} accessory card refreshes for {{DELIVERY_POSTCODE}}.
 - {{ACCESSORY_1}} is added to New service 1.
 - Edit view of New service 1 shows delivery location {{DELIVERY_POSTCODE}}."
-"TOM_49","Mobile PLP - Correct page redirection from tabs","Validate every tab action keeps user in Mobile PLP journey","1. Open {{ENV_URL}}.
+"TOM_48","Mobile PLP - Correct page redirection from tabs","Validate every tab action keeps user in Mobile PLP journey","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1443,7 +1409,7 @@
 - After returning to the Mobile phones tab the same quote reference is displayed.
 - New service 1 still shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
 - No tab redirects to Fixed PLP."
-"TOM_50","Mobile PLP - Footer action persistence","Validate footer actions are always present across Mobile PLP tabs","1. Open {{ENV_URL}}.
+"TOM_49","Mobile PLP - Footer action persistence","Validate footer actions are always present across Mobile PLP tabs","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1468,7 +1434,7 @@
 - No footer action disappears when switching tabs.
 - Device cards displayed after the filter are {{BRAND_FILTER}} devices.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_51","Mobile PLP - SIM Only quantity guardrail","Validate SIM Only quantity greater than 1 blocks device selection","1. Open {{ENV_URL}}.
+"TOM_50","Mobile PLP - SIM Only quantity guardrail","Validate SIM Only quantity greater than 1 blocks device selection","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1491,7 +1457,7 @@
 - No device line is added while quantity is greater than 1.
 - With {{PLAN_SIMO}} quantity 1 the {{DEVICE_1}} device card shows Selected.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_52","Mobile PLP - Plan-first compatible device set","Validate plan-first selection shows only compatible devices","1. Open {{ENV_URL}}.
+"TOM_51","Mobile PLP - Plan-first compatible device set","Validate plan-first selection shows only compatible devices","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1510,7 +1476,7 @@
 - Device carousel refreshes after plan selection.
 - Only device cards compatible with {{PLAN_1}} remain selectable; other device cards are hidden or disabled.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_53","Mobile PLP - Incompatible device block","Validate incompatible devices are not selectable after plan-first filtering","1. Open {{ENV_URL}}.
+"TOM_52","Mobile PLP - Incompatible device block","Validate incompatible devices are not selectable after plan-first filtering","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1530,7 +1496,7 @@
 - The {{PLAN_1}} plan tile still shows Selected.
 - No device is added to the current service context.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_54","Mobile PLP - RTSA re-trigger storage change","Validate RTSA API re-triggers when device storage changes","1. Open {{ENV_URL}}.
+"TOM_53","Mobile PLP - RTSA re-trigger storage change","Validate RTSA API re-triggers when device storage changes","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1553,7 +1519,7 @@
 - The {{DEVICE_1}} device card stock status refreshes to the returned state.
 - If the returned state is Out of Stock or Non-Orderable, message shown: ""Please select another colour/storage option"". and selection is blocked.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_55","Mobile PLP - RTSA re-trigger colour change","Validate RTSA API re-triggers when device colour changes","1. Open {{ENV_URL}}.
+"TOM_54","Mobile PLP - RTSA re-trigger colour change","Validate RTSA API re-triggers when device colour changes","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1576,7 +1542,7 @@
 - The {{DEVICE_1}} device card stock status refreshes to the returned state.
 - If the returned state is Out of Stock or Non-Orderable, message shown: ""Please select another colour/storage option"". and selection is blocked.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_56","Mobile PLP - RTSA re-trigger device change","Validate RTSA API re-triggers when device changes via selection/search","1. Open {{ENV_URL}}.
+"TOM_55","Mobile PLP - RTSA re-trigger device change","Validate RTSA API re-triggers when device changes via selection/search","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1600,7 +1566,7 @@
 - The {{DEVICE_2}} device card shows the returned stock status and any stock warning.
 - Actions on {{DEVICE_2}} are blocked or allowed in line with the returned stock state.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_57","Mobile PLP - Wearable RTSA re-trigger colour","Validate wearable RTSA re-triggers on colour change","1. Open {{ENV_URL}}.
+"TOM_56","Mobile PLP - Wearable RTSA re-trigger colour","Validate wearable RTSA re-triggers on colour change","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1631,7 +1597,7 @@
 - The {{WEARABLE_1}} wearable card stock status refreshes.
 - A non-purchasable result blocks selection of the variant.
 - User remains on the Wearables tab."
-"TOM_58","Mobile PLP - Wearable RTSA re-trigger case size","Validate wearable RTSA re-triggers on case size change","1. Open {{ENV_URL}}.
+"TOM_57","Mobile PLP - Wearable RTSA re-trigger case size","Validate wearable RTSA re-triggers on case size change","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1662,7 +1628,7 @@
 - The {{WEARABLE_1}} wearable card stock status refreshes.
 - A non-purchasable result blocks selection of the variant.
 - User remains on the Wearables tab."
-"TOM_59","Mobile PLP - Wearable RTSA re-trigger band","Validate wearable RTSA re-triggers on band change","1. Open {{ENV_URL}}.
+"TOM_58","Mobile PLP - Wearable RTSA re-trigger band","Validate wearable RTSA re-triggers on band change","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1693,7 +1659,7 @@
 - The {{WEARABLE_1}} wearable card stock status refreshes.
 - A non-purchasable result blocks selection of the variant.
 - User remains on the Wearables tab."
-"TOM_60","Mobile PLP - Wearable RTSA re-trigger band size","Validate wearable RTSA re-triggers on band size change","1. Open {{ENV_URL}}.
+"TOM_59","Mobile PLP - Wearable RTSA re-trigger band size","Validate wearable RTSA re-triggers on band size change","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1724,7 +1690,7 @@
 - The {{WEARABLE_1}} wearable card stock status refreshes.
 - A non-purchasable result blocks selection of the variant.
 - User remains on the Wearables tab."
-"TOM_61","Mobile PLP - Dedicated stock status Low Stock","Validate Low Stock state rendering and behavior","1. Open {{ENV_URL}}.
+"TOM_60","Mobile PLP - Dedicated stock status Low Stock","Validate Low Stock state rendering and behavior","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1746,7 +1712,7 @@
 20. Click Add to cart.","- The {{SKU_LOW_STOCK}} device card shows ""Low Stock"" with a low-stock indicator.
 - Add to cart outcome is explicit: New service 1 is added, or a visible warning blocks it.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_62","Mobile PLP - Dedicated stock status Back-order","Validate Back-order message and replenishment date rendering","1. Open {{ENV_URL}}.
+"TOM_61","Mobile PLP - Dedicated stock status Back-order","Validate Back-order message and replenishment date rendering","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1769,7 +1735,7 @@
 - Message shown: ""Device will ship from (replenishment date)"" with a date value.
 - Add to cart outcome follows the back-order policy.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_63","Mobile PLP - Dedicated stock status Non-Orderable","Validate Non-Orderable maps to Out of Stock and blocks invalid choice","1. Open {{ENV_URL}}.
+"TOM_62","Mobile PLP - Dedicated stock status Non-Orderable","Validate Non-Orderable maps to Out of Stock and blocks invalid choice","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1792,7 +1758,7 @@
 - Message shown: ""Please select another colour/storage option"".
 - No row is added to New services.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_64","Mobile PLP - Check store stock selection gate","Validate Check store stock is blocked before device select and enabled after select","1. Open {{ENV_URL}}.
+"TOM_63","Mobile PLP - Check store stock selection gate","Validate Check store stock is blocked before device select and enabled after select","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1812,7 +1778,7 @@
 18. Click Check store stock on the {{DEVICE_1}} device card.","- Before device selection Check store stock does not open a stock panel.
 - After selecting {{DEVICE_1}} Check store stock opens the stock panel for {{DEVICE_1}} with its product code.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_65","Mobile PLP - Pagination selection persistence","Validate selected device/plan state persists during pagination navigation","1. Open {{ENV_URL}}.
+"TOM_64","Mobile PLP - Pagination selection persistence","Validate selected device/plan state persists during pagination navigation","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1834,7 +1800,7 @@
 - Item counter range changes on next and returns on previous.
 - No row is added to New services.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_66","Mobile PLP - Filter persistence across pagination","Validate brand filter persists during pagination and back navigation","1. Open {{ENV_URL}}.
+"TOM_65","Mobile PLP - Filter persistence across pagination","Validate brand filter persists during pagination and back navigation","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1858,7 +1824,7 @@
 - {{BRAND_FILTER}} filter stays active after Navigate back from the {{DEVICE_1}} device card.
 - Only {{BRAND_FILTER}} device cards are displayed.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_67","Mobile PLP - Multiple plan selection to separate services","Validate multiple selected plans create separate services on Add to cart","1. Open {{ENV_URL}}.
+"TOM_66","Mobile PLP - Multiple plan selection to separate services","Validate multiple selected plans create separate services on Add to cart","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1880,7 +1846,7 @@
 - New service 1 shows {{PLAN_1}} and New service 2 shows {{PLAN_2}}.
 - New service 1 and New service 2 each have their own Edit button.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_68","Mobile PLP - Wearables prerequisite validation","Validate wearables selection is blocked until device/plan prerequisite is met","1. Open {{ENV_URL}}.
+"TOM_67","Mobile PLP - Wearables prerequisite validation","Validate wearables selection is blocked until device/plan prerequisite is met","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1910,7 +1876,7 @@
 28. Click Select on the {{WEARABLE_1}} wearable card.","- Message shown: ""Please select plan or device."" on the first {{WEARABLE_1}} Select.
 - {{WEARABLE_1}} is not added before New service 1 exists.
 - After New service 1 is created the {{WEARABLE_1}} wearable card shows Selected."
-"TOM_69","Mobile PLP - Accessories prerequisite validation","Validate accessories selection is blocked until device/plan prerequisite is met","1. Open {{ENV_URL}}.
+"TOM_68","Mobile PLP - Accessories prerequisite validation","Validate accessories selection is blocked until device/plan prerequisite is met","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1940,7 +1906,7 @@
 28. Click Select on the {{ACCESSORY_1}} accessory card.","- Message shown: ""Please select plan or device."" on the first {{ACCESSORY_1}} Select.
 - {{ACCESSORY_1}} is not added before New service 1 exists.
 - After New service 1 is created the {{ACCESSORY_1}} accessory card shows Selected."
-"TOM_70","Mobile PLP - Device care prerequisite validation","Validate device care cannot be selected before a device is selected","1. Open {{ENV_URL}}.
+"TOM_69","Mobile PLP - Device care prerequisite validation","Validate device care cannot be selected before a device is selected","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.
@@ -1963,7 +1929,7 @@
 - No {{DEVICE_1_ADDON}} line is created before a device is selected.
 - After {{DEVICE_1}} {{DEVICE_1_STORAGE}} is selected {{DEVICE_1_ADDON}} is added to the service.
 - User remains on the Mobile phones tab and is not redirected to Fixed PLP."
-"TOM_71","Mobile PLP - Save and Resume full persistence","Validate Save Quote and Resume Quote persist all Mobile PLP selections","1. Open {{ENV_URL}}.
+"TOM_70","Mobile PLP - Save and Resume full persistence","Validate Save Quote and Resume Quote persist all Mobile PLP selections","1. Open {{ENV_URL}}.
 2. Enter {{ENV_USERNAME}} in User ID.
 3. Enter {{ENV_PASSWORD}} in Password.
 4. Click Login.

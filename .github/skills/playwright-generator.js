@@ -398,11 +398,11 @@ function generateLaunchMobilePLPFunction() {
 		"    }",
 		"    return false;",
 		"  };",
-		"  const completeAddressLookup = async () => {",
+		"  const completeAddressLookup = async (queryOverride) => {",
 		"    const searchField = page.getByRole('textbox', { name: /^Search$/i }).first();",
 		"    if ((await searchField.count()) > 0) {",
 		"      await searchField.waitFor({ state: 'visible', timeout: 15000 }).catch(() => {});",
-		"      const queryToType = addressLookupQuery || (process.env.ADDRESS_SEARCH || '').trim();",
+		"      const queryToType = queryOverride || addressLookupQuery || (process.env.ADDRESS_SEARCH || '').trim();",
 		"      if (queryToType) await searchField.fill(queryToType).catch(() => {});",
 		"      await searchField.press('Enter').catch(() => {});",
 		"    }",
@@ -494,13 +494,35 @@ function generateLaunchMobilePLPFunction() {
 		"    console.log('launchMobilePLP: address lookup page not detected; bodySnippet=', String(bodyText || '').slice(0, 1000).replace(/\\s+/g, ' '));",
 		"    throw new Error('Address lookup page was not reached after Enter new customer details');",
 		"  }",
+		"  if (journeyOptions.stopAfterCustomerDetails) {",
+		"    console.log('launchMobilePLP: CSV has no address steps - continuing WITHOUT a coverage address');",
+		"    await captureStage('coverage-check').catch(() => {});",
+		"    const tabRx = /^\\s*Mobile phones\\s*$/i;",
+		"    const reached = async () => (await page.getByText(tabRx).first().isVisible().catch(() => false));",
+		"    for (const name of [/^Next$/i, /^Skip/i, /^Continue$/i]) {",
+		"      if (await reached()) break;",
+		"      const b = page.getByRole('button', { name }).last();",
+		"      if (await b.isVisible().catch(() => false)) { await clickLocatorRobust(b).catch(() => {}); await page.waitForTimeout(4000); }",
+		"    }",
+		"    if (!(await reached())) throw new Error('launchMobilePLP did not navigate to Mobile PLP: Mobile phones tab is not reachable without a coverage address (precondition of this TOM cannot be met in this environment)');",
+		"    await captureStage('mobile-plp').catch(() => {});",
+		"    return;",
+		"  }",
 		"  const addressField = page.getByRole('textbox', { name: /Address|Search|Coverage address|Coverage Address|Address line/i }).first();",
 		"  if ((await addressField.count()) > 0) {",
 		"    await addressField.waitFor({ state: 'visible', timeout: 30000 }).catch(() => {});",
 		"    if (addressLookupQuery) await addressField.fill(addressLookupQuery).catch(() => {});",
 		"  }",
 		"  await completeAddressLookup();",
-		"  const coverageCheckLoaded = await waitForCoverageCheckPage(120000);",
+		"  let coverageCheckLoaded = await waitForCoverageCheckPage(90000);",
+		"  for (let attempt = 1; !coverageCheckLoaded && attempt <= 2; attempt += 1) {",
+		"    // Retry: search again using the exact expected address text (data-driven) so the right suggestion is listed",
+		"    const retryQuery = (process.env.ADDRESS_RESULT_TEXT || '').trim();",
+		"    const useFull = retryQuery && !/suggestion|keyboard|first/i.test(retryQuery);",
+		"    console.log('launchMobilePLP: coverage not loaded, retrying address lookup attempt', attempt, useFull ? 'with ADDRESS_RESULT_TEXT' : '');",
+		"    await completeAddressLookup(useFull ? retryQuery : undefined).catch((e) => console.log('retry lookup failed', e && e.message));",
+		"    coverageCheckLoaded = await waitForCoverageCheckPage(60000);",
+		"  }",
 		"  console.log('launchMobilePLP: coverageCheckLoaded=', coverageCheckLoaded, 'url=', page.url());",
 		"  if (!coverageCheckLoaded) {",
 		"    throw new Error('Coverage check page did not finish loading after address selection');",
@@ -822,7 +844,8 @@ try {
 
 	if (/address\s+lookup.*enter/i.test(s)) {
 		const quoted = extractQuotedText(s);
-		const query = quoted.find(Boolean) || '177 pacific';
+		const query = quoted.find(Boolean) || process.env.ADDRESS_SEARCH || process.env.ADDRESS || '';
+		if (!query) throw new Error('Missing test data for ADDRESS_SEARCH (address lookup step)');
 		actions.push(`{
 const searchField = page.getByRole('textbox', { name: /^Search$/i }).first();
 await searchField.waitFor({ state: 'visible', timeout: 15000 }).catch(() => {});

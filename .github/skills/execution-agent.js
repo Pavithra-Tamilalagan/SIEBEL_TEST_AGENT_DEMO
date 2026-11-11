@@ -17,6 +17,7 @@ const { readInputTestcases } = require('./input-agent');
 const { chromium, expect } = require('@playwright/test');
 const { generateActionBlock, generateLaunchMobilePLPFunction, generateClickLocatorCode, cleanControlLabel, deriveJourneyRuntimeOptions } = require('./playwright-generator');
 const { createArtifactManager, isVerificationStep } = require('./artifact-agent');
+const stepRunner = require('./step-runner');
 let pwConfig = null;
 try {
   // Load the Playwright test runner config to mirror its launch settings exactly
@@ -46,11 +47,12 @@ function splitAndCleanSteps(orderStepsText) {
   // Replace any occurrences of multiple newlines with single newline
   text = text.replace(/\n+/g, '\n');
 
-  // Split on numbering like "1.", "1)" or newlines
-  const rawParts = text
-    .split(/(?:\n)|(?:\d+\s*[\.|\)]\s*)/)
-    .map((s) => s.trim())
-    .filter(Boolean);
+  // Split on line breaks; numbering ("1.", "1)") is only treated as a separator at the
+  // start of a line, so resolved data values (URLs, versions, "iPhone 17.") stay intact.
+  const lines = text.split('\n').map((s) => s.trim()).filter(Boolean);
+  const rawParts = lines.length > 1
+    ? lines.map((s) => s.replace(/^\d+\s*[.)]\s*/, ''))
+    : text.split(/(?:^|\s)\d+\s*[.)]\s+/).map((s) => s.trim()).filter(Boolean);
 
   // Clean each step: remove extra explanatory clauses and normalize spacing
   const cleaned = rawParts.map((step) => {
@@ -489,6 +491,12 @@ async function runExecutionCaseFromCase(executionCase) {
 
     // Inferred from the CSV steps (not TOM number): run shared precondition when the steps include the sales-calculator/address flow
     const usesPreconditionFlow = /sales calculator|address lookup|coverage check/i.test(stepsToExecute.join('\n'));
+    // Derived from CSV: TOMs with no address steps must reach the PLP WITHOUT a coverage address
+    journeyOptions.stopAfterCustomerDetails = !/address lookup|address result|coverage check page/i.test(stepsToExecute.join('\n'))
+      || String(process.env.STOP_AFTER_CUSTOMER_DETAILS || '').toLowerCase() === 'true';
+    stepRunner.resetState();
+    const unmappedSteps = [];
+    globalThis.__unmappedSteps = unmappedSteps;
     if (usesPreconditionFlow && launchMobilePLP) {
       console.log('Invoking shared launchMobilePLP() helper for', executionCase.testCaseId);
       try {
@@ -509,22 +517,12 @@ async function runExecutionCaseFromCase(executionCase) {
         }
       }
 
-      // After the shared helper, start from the first true post-helper business step.
-      const firstPostHelperIndex = stepsToExecute.findIndex((s) => /mobile\s*plp\s+tab|plan\s+tile|device\s+card|storage\s+option|payment\s+term|device\s+care|add\s+to\s+cart|calculate\s+bundle\s*&?\s*save|create\s+quote|create\s+order/i.test(s));
-      if (firstPostHelperIndex >= 0) {
-        stepsToExecute = stepsToExecute.slice(firstPostHelperIndex);
-        console.log('Filtered out', firstPostHelperIndex, 'precondition steps; running', stepsToExecute.length, 'post-helper steps');
-      } else {
-        const preconditionIndex = stepsToExecute.findIndex((s) => /open.*mobile\s*plp|mobile\s*plp|open.*sales calculator|navigate to sales calculator|navigate to Sales Calculator/i.test(s));
-        if (preconditionIndex >= 0) {
-          stepsToExecute = stepsToExecute.slice(preconditionIndex + 1);
-          console.log('Filtered out', preconditionIndex + 1, 'precondition steps; running', stepsToExecute.length, 'validation steps');
-        } else {
-          // If no explicit navigation step found, attempt to filter obvious login/navigate steps
-          stepsToExecute = stepsToExecute.filter((s) => !/\b(log ?in|sign in|login)\b/i.test(s) && !/navigate to site map|open site map|sales calculator|open site map/i.test(s));
-          console.log('Filtered precondition-like steps; running', stepsToExecute.length, 'validation steps');
-        }
-      }
+      // Skip only the leading steps that the shared precondition helper already performed.
+      const preconditionRx = /^open\s+https?:|user id|password|^click login|site map|sales calculator link|first name|last name|enter new customer details|address lookup|address result|coverage check page|^click next\.?$/i;
+      let skip = 0;
+      while (skip < stepsToExecute.length && preconditionRx.test(String(stepsToExecute[skip]).trim())) skip += 1;
+      stepsToExecute = stepsToExecute.slice(skip);
+      console.log('Skipped', skip, 'precondition steps performed by launchMobilePLP; running', stepsToExecute.length, 'business steps');
     }
 
       for (const step of stepsToExecute) {
@@ -539,7 +537,42 @@ async function runExecutionCaseFromCase(executionCase) {
         }
 
         console.log('Executing step:', step);
+        // 1) Generic data-driven step grammar
+        let handledByRunner = false;
+        let lastRunner = null;
+        try {
+          const r = await stepRunner.runStep(page, step);
+          lastRunner = r;
+          if (r.handled) {
+            handledByRunner = true;
+            console.log('STEP_RUNNER:', step, '=>', r.detail);
+          }
+        } catch (srErr) {
+          console.error('STEP_RUNNER_FAILED:', step, '=>', srErr && srErr.message);
+          throw new Error(`Step failed: "${step}" - ${srErr && srErr.message}`);
+        }
+        if (handledByRunner) {
+          try {
+            const shot = await artifactManager.captureStepScreenshot(page, stepIndex, step);
+            console.log('Saved step screenshot:', shot);
+          } catch (sErr) { console.warn('Step screenshot failed', sErr && sErr.message); }
+          if (lastRunner && lastRunner.popup) {
+            try {
+              const pshot = await artifactManager.captureStepScreenshot(lastRunner.popup, stepIndex, `opened page - ${step}`);
+              console.log('Saved opened-page screenshot:', pshot);
+            } catch (pErr) { console.warn('Opened-page screenshot failed', pErr && pErr.message); }
+            await lastRunner.popup.close().catch(() => {});
+            await page.bringToFront().catch(() => {});
+          }
+          continue;
+        }
+        // 2) Legacy generator fallback
         let actionBlock = generateActionBlock(step);
+        if (/^\s*\/\/ Unmapped step/.test(String(actionBlock || ''))) {
+          unmappedSteps.push(step);
+          console.error('UNMAPPED_STEP (not executed):', step);
+          continue;
+        }
         console.log('Action block:\n', actionBlock);
 
         // If generator produced a simple getByRole button click referencing a literal "tab" suffix,
@@ -622,9 +655,8 @@ async function runExecutionCaseFromCase(executionCase) {
 
         // after each step capture a debug screenshot
         try {
-          const debugPath = path.resolve(artifactManager.paths.screenshotDir, `debug-step-${String(stepIndex).padStart(2, '0')}.png`);
-          await page.screenshot({ path: debugPath, fullPage: true });
-          console.log('Saved debug screenshot:', debugPath);
+          const debugPath = await artifactManager.captureStepScreenshot(page, stepIndex, step);
+          console.log('Saved step screenshot:', debugPath);
         } catch (sErr) {
           console.warn('Failed to save debug screenshot for step', stepIndex, sErr && sErr.message);
         }
@@ -648,13 +680,9 @@ async function runExecutionCaseFromCase(executionCase) {
       try { console.log('Current URL (final):', await page.url()); } catch (e) {}
     } catch (e) {}
 
-    // capture final success screenshot with naming convention
+    // Final PASS screenshot is captured only after all verifications succeed (see below)
     let finalImage = null;
     const preferredEvidenceImage = String(globalThis.__preferredEvidenceScreenshotPath || '').trim() || null;
-    try {
-      finalImage = await artifactManager.captureFinalScreenshot(page, 'PASS').catch(()=>null);
-      if (finalImage) console.log('Saved final PASS screenshot:', finalImage);
-    } catch (e) {}
 
     // Run Post_Verification checks and collect structured results
     async function runPostVerifications() {
@@ -774,6 +802,8 @@ async function runExecutionCaseFromCase(executionCase) {
         if (!l) continue;
         const item = { verification_name: l, expected: l, actual: null, status: 'PASS', failure_reason: '' };
         try {
+          const generic = await stepRunner.verifyLine(page, l);
+          if (generic) { results.push(generic); continue; }
           // Human-readable checks that describe groups of visible labels or state rather than exact sentence matches.
           if (/item counter.*total format/i.test(l)) {
             const counterFound = await page.getByText(/\b\d+\s*-\s*\d+\s+of\s+\d+\b/i).count();
@@ -820,8 +850,9 @@ async function runExecutionCaseFromCase(executionCase) {
             results.push(item); continue;
           }
 
-          if (/controls\s+search,\s*sort by,\s*filter by brand,\s*check delivery estimate,\s*and same as coverage check are visible/i.test(l)) {
-            const labels = ['Search', 'Sort by', 'Filter by brand', 'Check delivery estimate', 'Same as coverage check'];
+          const _ctrlMatch = l.match(/controls?\s+(.+?)\s+(?:are|is)\s+visible/i);
+          if (_ctrlMatch) {
+            const labels = _ctrlMatch[1].split(/\s*,\s*(?:and\s+)?|\s+and\s+/i).map((x) => x.trim()).filter(Boolean);
             let found = 0;
             for (const label of labels) {
               try {
@@ -829,7 +860,7 @@ async function runExecutionCaseFromCase(executionCase) {
               } catch (e) {}
             }
             item.actual = `${found}/${labels.length} controls visible`;
-            if (found < 3) { item.status = 'FAIL'; item.failure_reason = 'Expected Mobile phones controls were not visible'; }
+            if (found < labels.length) { item.status = 'FAIL'; item.failure_reason = `Expected controls not visible (${found}/${labels.length})`; }
             results.push(item); continue;
           }
 
@@ -994,6 +1025,11 @@ async function runExecutionCaseFromCase(executionCase) {
             }
             results.push(item); continue;
           }
+          // No automated check exists for this expected result: report it instead of silently passing
+          item.status = 'NOT_VERIFIED';
+          item.actual = 'no automated check';
+          item.failure_reason = 'Expected result has no automated check - verify manually from screenshots';
+          results.push(item); continue;
         } catch (err) {
           item.status = 'FAIL';
           item.failure_reason = err && err.message ? err.message : String(err);
@@ -1014,6 +1050,19 @@ async function runExecutionCaseFromCase(executionCase) {
     if (failedVerifications.length > 0) {
       throw new Error(`Post verification failed: ${failedVerifications[0].verification_name}${failedVerifications[0].failure_reason ? ` - ${failedVerifications[0].failure_reason}` : ''}`);
     }
+    const strictSteps = String(process.env.STRICT_STEPS || 'true').toLowerCase() !== 'false';
+    if (strictSteps && unmappedSteps.length) {
+      throw new Error(`Steps not automated (not executed): ${unmappedSteps.join(' | ')}`);
+    }
+    const notVerified = verificationResults.filter((vr) => vr && vr.status === 'NOT_VERIFIED');
+    const strictVerify = String(process.env.STRICT_VERIFY || 'false').toLowerCase() === 'true';
+    if (strictVerify && notVerified.length) {
+      throw new Error(`Expected results not verified automatically: ${notVerified.map((v) => v.verification_name).join(' | ')}`);
+    }
+    try {
+      finalImage = await artifactManager.captureFinalScreenshot(page, 'PASS').catch(() => null);
+      if (finalImage) console.log('Saved final PASS screenshot:', finalImage);
+    } catch (e) {}
 
     if (typeof tracingStarted !== 'undefined' && tracingStarted) {
       try { await artifactManager.stopTrace(context); } catch(e) { console.warn('stopTrace failed', e && e.message); }
@@ -1027,6 +1076,8 @@ async function runExecutionCaseFromCase(executionCase) {
       screenshot: preferredEvidenceImage || finalImage || artifactManager.paths.primaryScreenshot,
       trace: artifactManager.paths.tracePath,
       video: videoPath || artifactManager.paths.videoPath,
+      evidence: artifactManager.evidence,
+      reason: notVerified.length ? `Manual check needed: ${notVerified.map((v) => v.verification_name).join(' | ')}` : '',
       verificationResults: verificationResults
     };
   } catch (error) {
@@ -1070,6 +1121,8 @@ async function runExecutionCaseFromCase(executionCase) {
       screenshot: failureShotPath,
       trace: artifactManager.paths.tracePath,
       video: artifactManager.paths.videoPath,
+      evidence: artifactManager.evidence,
+      unmappedSteps: globalThis.__unmappedSteps || [],
       verificationResults: verificationResults
     };
   } finally {

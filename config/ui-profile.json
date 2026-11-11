@@ -1,0 +1,10 @@
+{
+  "_comment": "Application UI vocabulary used by the generic step runner. Change here (not in code) when the UI wording changes.",
+  "planCardMarkers": ["contract type", "national calls", "national sms", "critical information summary", "idd zone"],
+  "propositionLabel": "Proposition",
+  "cartPanelHeading": "New services",
+  "cartRowPrefix": "New service",
+  "cartEmptyText": "no new services added",
+  "paymentTermLabel": "Payment term",
+  "addonLabel": "Device care"
+}

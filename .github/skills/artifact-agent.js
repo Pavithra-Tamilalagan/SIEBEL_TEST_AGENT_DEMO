@@ -35,28 +35,84 @@ async function ensureArtifactDirectories(paths) {
     await fs.mkdir(paths.videoDir, { recursive: true });
 }
 
+/**
+ * Screenshot of the whole application content. Siebel scrolls inside inner panels,
+ * so page.fullPage alone only shows the viewport. Temporarily un-clip scrollable
+ * containers, enlarge the viewport to the content height, shoot, then restore.
+ */
+async function fullContentScreenshot(page, filePath) {
+    const original = page.viewportSize();
+    let height = 0;
+    try {
+        height = await page.evaluate(() => {
+            const changed = [];
+            for (const el of Array.from(document.querySelectorAll('body *'))) {
+                const cs = getComputedStyle(el);
+                if (/(auto|scroll|hidden)/.test(cs.overflowY) && el.scrollHeight > el.clientHeight + 20 && el.clientHeight > 150) {
+                    changed.push([el, el.getAttribute('style')]);
+                    el.style.setProperty('overflow', 'visible', 'important');
+                    el.style.setProperty('height', 'auto', 'important');
+                    el.style.setProperty('max-height', 'none', 'important');
+                }
+            }
+            for (const el of [document.documentElement, document.body]) {
+                changed.push([el, el.getAttribute('style')]);
+                el.style.setProperty('overflow', 'visible', 'important');
+                el.style.setProperty('height', 'auto', 'important');
+            }
+            window.__srRestore = changed;
+            return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        });
+        if (original && height > original.height) {
+            await page.setViewportSize({ width: original.width, height: Math.min(height, 12000) });
+        }
+        await page.screenshot({ path: filePath, fullPage: true });
+    } finally {
+        await page.evaluate(() => {
+            for (const [el, style] of (window.__srRestore || [])) {
+                if (style === null) el.removeAttribute('style'); else el.setAttribute('style', style);
+            }
+            window.__srRestore = null;
+        }).catch(() => {});
+        if (original) await page.setViewportSize(original).catch(() => {});
+    }
+    return filePath;
+}
+
+function slug(text, max = 50) {
+    return String(text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, max) || 'step';
+}
+
 async function createArtifactManager(testCaseId = 'TOM_01') {
     const paths = getArtifactPaths(testCaseId);
     await ensureArtifactDirectories(paths);
 
     let verificationCount = 0;
     let stepCounter = 0;
+    const evidence = [];
 
     return {
         paths,
+        evidence,
+        async captureStepScreenshot(page, stepNo, stepText) {
+            const filePath = path.resolve(paths.screenshotDir, `${normalizeTestCaseId(testCaseId)}-step-${String(stepNo).padStart(2, '0')}-${slug(stepText)}.png`);
+            await fullContentScreenshot(page, filePath);
+            evidence.push({ step: stepNo, action: String(stepText || ''), screenshot: filePath });
+            return filePath;
+        },
         async captureVerificationScreenshot(page) {
             verificationCount += 1;
             const filePath = verificationCount === 1
                 ? paths.primaryScreenshot
                 : path.resolve(paths.screenshotDir, `${normalizeTestCaseId(testCaseId)}-verify-${String(verificationCount).padStart(2, '0')}.png`);
 
-            await page.screenshot({ path: filePath, fullPage: true });
+            await fullContentScreenshot(page, filePath);
             return filePath;
         },
         async captureFailureScreenshot(page) {
             stepCounter += 1;
             const filePath = path.resolve(paths.screenshotDir, `${normalizeTestCaseId(testCaseId)}-failure-${String(stepCounter).padStart(2, '0')}.png`);
-            await page.screenshot({ path: filePath, fullPage: true });
+            await fullContentScreenshot(page, filePath);
             return filePath;
         },
         async collectVideoPath(page) {
@@ -84,7 +140,7 @@ async function createArtifactManager(testCaseId = 'TOM_01') {
             const safe = normalizeTestCaseId(testCaseId);
             const fileName = `${safe}-${String(status || 'PASS').toUpperCase()}-${Date.now()}.png`;
             const filePath = path.resolve(paths.screenshotDir, fileName);
-            await page.screenshot({ path: filePath, fullPage: true });
+            await fullContentScreenshot(page, filePath);
             return filePath;
         },
         async getArtifactSummary(page, context) {

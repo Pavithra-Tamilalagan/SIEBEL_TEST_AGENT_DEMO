@@ -1,0 +1,2000 @@
+﻿"TOM_NUM","User_Journey","TOM Description","Order_Steps","Post_Verification"
+"TOM_01","Mobile PLP - Page shell","Validate Mobile PLP page shell, quote context, and category tabs","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Calculate Bundle & Save.
+25. Wait for the message ""Bundle and save calculation is completed."" to be displayed.
+26. Click Create quote.
+27. Wait for the quote page to finish loading.
+28. Click Create order.
+29. Wait for the order page to finish loading.","- Message shown: ""Cart updated"".
+- Message shown: ""Bundle and save calculation is completed."".
+- New service 1 shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}} with an Edit button on the row.
+- Tabs Mobile phones, Tablets & MBB, Bundles, Wearables and Accessories are displayed with Mobile phones active before Create quote.
+- Quote page loads after Create quote and order page loads after Create order.
+- User is not redirected to Fixed PLP at any step."
+"TOM_02","Mobile PLP - Mobile phones tab default","Validate default controls and Apple-filtered cards on Mobile phones tab","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Open the Filter by brand drop-down.
+17. Select the {{BRAND_FILTER}} option.","- Search, Sort by, Filter by brand, Check delivery estimate and Same as coverage check controls are displayed.
+- Every device card displayed is a {{BRAND_FILTER}} device and shows stock state, price, attribute details and a Select button.
+- Each plan tile shows proposition, entitlement values and an enabled Select button.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_03","Mobile PLP - Mobile phones pagination","Validate item counter, carousel pagination, and selected device persistence","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Click Select on the {{DEVICE_1}} device card.
+17. Click the next arrow on the device carousel.
+18. Click the previous arrow on the device carousel.","- Item counter is displayed in n-m of total items format.
+- Next arrow changes the displayed card set and counter range.
+- Previous arrow restores the prior card set and counter range.
+- The {{DEVICE_1}} device card still shows Selected.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_04","Mobile PLP - Add to cart validation no selection","Validate Add to cart when no device and no plan are selected","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Leave all device cards unselected.
+17. Leave all plan tiles unselected.
+18. Click Add to cart.","- Message shown: ""Please select a Plan to proceed"" above the listing tabs.
+- No row is added to New services.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_05","Mobile PLP - Add to cart validation missing plan","Validate Add to cart when device is selected but plan is missing","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Open the {{DEVICE_1}} device card.
+17. Select the {{DEVICE_1_STORAGE}} storage option.
+18. Select the {{DEVICE_1_COLOUR}} colour option.
+19. Select the {{DEVICE_1_TERM}} payment term.
+20. Leave all plan tiles unselected.
+21. Click Add to cart.","- The {{DEVICE_1}} device card shows Selected with {{DEVICE_1_STORAGE}}, {{DEVICE_1_COLOUR}} and {{DEVICE_1_TERM}}.
+- Message shown: ""Please select a Plan to proceed"" above the listing tabs.
+- Message ""Changes have been made to your order successfully."" is not displayed.
+- No row is added to New services.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_06","Mobile PLP - Plan-first selection","Validate plan-first selection updates Selected state","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Click Clear selection.","- After plan selection only the {{PLAN_1}} plan tile shows Selected.
+- Device cards compatible with {{PLAN_1}} keep a displayed Select button.
+- After Clear selection no plan tile or device card shows Selected.
+- Plan and device lists return to the pre-selection order and count.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_07","Mobile PLP - Device-first selection","Validate device-first flow and compatible plan refresh","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Open the {{DEVICE_1}} device card.
+17. Select the {{DEVICE_1_STORAGE}} storage option.
+18. Select the {{DEVICE_1_COLOUR}} colour option.
+19. Select the {{DEVICE_1_TERM}} payment term.
+20. Select the {{PLAN_1}} plan tile.","- Only the {{DEVICE_1}} device card shows Selected.
+- Plan list refreshes and only plans compatible with {{DEVICE_1}} remain selectable.
+- The {{PLAN_1}} plan tile shows Selected in the same service context.
+- No row is added to New services.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_08","Mobile PLP - Add to cart success","Validate successful add to cart for device plus plan","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.","- Message shown: ""Cart updated"".
+- Message shown: ""Changes have been made to your order successfully."".
+- New service 1 is displayed in New services showing {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}} and {{DEVICE_1_ADDON}}.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_09","Mobile PLP - Service added toast","Validate Service added to cart notification state","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.","- Message shown: ""Service added to cart."" in the top message area before the steady state.
+- Message shown: ""Cart updated"".
+- New service 1 is added to New services.
+- User remains on the Mobile phones tab and plan tiles and device cards remain selectable."
+"TOM_10","Mobile PLP - Add second service","Validate multi-service flow using Add new service","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Add new service.
+25. Select the {{PLAN_2}} plan tile.
+26. Open the {{DEVICE_2}} device card.
+27. Select the {{DEVICE_2_STORAGE}} storage option.
+28. Select the {{DEVICE_2_COLOUR}} colour option.
+29. Select the {{DEVICE_2_TERM}} payment term.
+30. Select {{DEVICE_2_ADDON}} in Device care.
+31. Click Add to cart.
+32. Wait for New service 2 to be displayed in New services.","- Message shown: ""Cart updated"". after the second Add to cart.
+- Message shown: ""Changes have been made to your order successfully."".
+- New service 1 shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
+- New service 2 shows {{PLAN_2}} / {{DEVICE_2}} {{DEVICE_2_STORAGE}} {{DEVICE_2_COLOUR}}.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_11","Mobile PLP - Remove service","Validate remove single service action","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Add new service.
+25. Select the {{PLAN_2}} plan tile.
+26. Open the {{DEVICE_2}} device card.
+27. Select the {{DEVICE_2_STORAGE}} storage option.
+28. Select the {{DEVICE_2_COLOUR}} colour option.
+29. Select the {{DEVICE_2_TERM}} payment term.
+30. Select {{DEVICE_2_ADDON}} in Device care.
+31. Click Add to cart.
+32. Wait for New service 2 to be displayed in New services.
+33. Click Remove service on the New service 2 row.
+34. Click {{REMOVE_CONFIRM_BUTTON}} in the removal confirmation dialog.
+35. Wait for New services to finish refreshing.","- New service 2 ({{PLAN_2}} / {{DEVICE_2}} {{DEVICE_2_STORAGE}} {{DEVICE_2_COLOUR}}) is no longer displayed in New services.
+- New service 1 still shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
+- Recurring charges, One time charges and Total are recalculated to exclude New service 2.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_12","Mobile PLP - Remove all new services","Validate Remove all new services bulk action","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Add new service.
+25. Select the {{PLAN_2}} plan tile.
+26. Open the {{DEVICE_2}} device card.
+27. Select the {{DEVICE_2_STORAGE}} storage option.
+28. Select the {{DEVICE_2_COLOUR}} colour option.
+29. Select the {{DEVICE_2_TERM}} payment term.
+30. Select {{DEVICE_2_ADDON}} in Device care.
+31. Click Add to cart.
+32. Wait for New service 2 to be displayed in New services.
+33. Click Remove all new services.
+34. Click {{REMOVE_CONFIRM_BUTTON}} in the removal confirmation dialog.
+35. Wait for New services to finish refreshing.","- No New service row is displayed in New services.
+- Recurring charges, One time charges and Total return to the empty-cart baseline.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_13","Mobile PLP - Clear selection in listing","Validate Clear selection resets selected cards and plans","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Click Clear selection.","- No plan tile or device card shows Selected after Clear selection.
+- No row is added to New services.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_14","Mobile PLP - Same as coverage check disabled","Validate Same as coverage check is disabled before valid coverage context","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Open the Mobile phones tab.
+12. Check the Same as coverage check checkbox.","- Same as coverage check checkbox is displayed and disabled.
+- Clicking the checkbox does not tick it.
+- Suburb, postcode and state fields remain empty.
+- User remains on the Mobile phones tab."
+"TOM_15","Mobile PLP - Same as coverage check enabled","Validate Same as coverage check populates shipping fields","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Click and Enable the ""Same as coverage check"" checkbox.
+17. Select the {{PLAN_1}} plan tile.
+18. Open the {{DEVICE_1}} device card.
+19. Select the {{DEVICE_1_STORAGE}} storage option.
+20. Select the {{DEVICE_1_COLOUR}} colour option.
+21. Select the {{DEVICE_1_TERM}} payment term.
+22. Add {{DEVICE_1_ADDON}}.
+23. Click Add to cart.
+24. Wait for New service 1 to be displayed in New services.","- Same as coverage check checkbox is ticked.
+- Shipping suburb and postcode are populated from the coverage address {{ADDRESS_SEARCH}}.
+- Message shown: ""Cart updated"".
+- Populated shipping values remain after New service 1 is created.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_16","Mobile PLP - Search device","Validate search filters device cards correctly","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Enter {{SEARCH_KEYWORD}} in Search.
+17. Click Search.
+18. Clear the Search field.
+19. Click Search.","- After the first Search only device cards matching {{SEARCH_KEYWORD}} are displayed.
+- Device cards not matching {{SEARCH_KEYWORD}} are not displayed while the term is active.
+- After clearing Search the default unfiltered listing and item counter range are restored.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_17","Mobile PLP - Sort by Most popular","Validate Most popular sort applies without navigation loss","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Open the Sort by drop-down.
+17. Select the Most popular option.
+18. Select the {{PLAN_1}} plan tile.
+19. Open the {{DEVICE_1}} device card.
+20. Select the {{DEVICE_1_STORAGE}} storage option.
+21. Select the {{DEVICE_1_COLOUR}} colour option.
+22. Select the {{DEVICE_1_TERM}} payment term.
+23. Add {{DEVICE_1_ADDON}}.
+24. Click Add to cart.
+25. Wait for New service 1 to be displayed in New services.","- Device card order changes from the default order after Most popular is selected.
+- Sort by shows Most popular after the list refreshes.
+- Message shown: ""Cart updated"".
+- New service 1 shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_18","Mobile PLP - Sort by price high","Validate Price High sorting option behavior","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Open the Sort by drop-down.
+17. Select the Price High option.","- With Price High the highest priced device card is displayed first.
+- Re-selecting Price High reproduces the same descending order.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_19","Mobile PLP - Sort by price low","Validate Price Low sorting option behavior","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Open the Sort by drop-down.
+17. Select the Price Low option.
+18. Click Select on the first device card.
+19. Click the next arrow on the device carousel.
+20. Click the previous arrow on the device carousel.","- With Price Low the lowest priced device card is displayed first.
+- Price Low ordering stays applied after next and previous arrows.
+- The first device card still shows Selected after pagination.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_20","Mobile PLP - Filter by brand","Validate brand filter options and reset","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Open the Filter by brand drop-down.
+17. Select the {{BRAND_FILTER}} option.
+18. Open the Filter by brand drop-down.
+19. Select the {{BRAND_FILTER_2}} option.
+20. Open the Filter by brand drop-down.
+21. Select the Other option.","- With {{BRAND_FILTER}} selected every displayed device card is a {{BRAND_FILTER}} device.
+- With {{BRAND_FILTER_2}} selected every displayed device card is a {{BRAND_FILTER_2}} device.
+- With Other selected the mixed-brand baseline listing is restored.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_21","Mobile PLP - Check store stock entry","Validate Check store stock option appears for selectable items","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Click Select on the {{DEVICE_1}} device card.
+17. Click Check store stock on the {{DEVICE_1}} device card.
+18. Click Close on the store stock panel.","- Store stock panel opens for the {{DEVICE_1}} device and shows its product code.
+- After Close the {{DEVICE_1}} device card still shows Selected.
+- Active filters are unchanged.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_22","Mobile PLP - Stock state In Stock","Validate In Stock visual state and add flow","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.","- The {{DEVICE_1}} device card shows In stock with no stock warning.
+- Message shown: ""Cart updated"".
+- New service 1 shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_23","Mobile PLP - Stock state warning path","Validate non-success stock states and warning presentation","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+17. Click Search in Check delivery estimate.
+18. Open the {{SKU_NON_ORDERABLE}} device card.
+19. Select the {{PLAN_1}} plan tile.
+20. Click Add to cart.","- The {{SKU_NON_ORDERABLE}} device card shows Out of Stock.
+- Message shown: ""Please select another colour/storage option"".
+- Add to cart is blocked and no row is added to New services.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_24","Mobile PLP - RTSA technical error","Validate RTSA technical error handling message","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+17. Click Search in Check delivery estimate.
+18. Open the {{SKU_RTSA_ERROR}} device card.
+19. Click Clear selection.
+20. Select the {{PLAN_1}} plan tile.
+21. Open the {{DEVICE_1}} device card.
+22. Select the {{DEVICE_1_STORAGE}} storage option.
+23. Select the {{DEVICE_1_COLOUR}} colour option.
+24. Select the {{DEVICE_1_TERM}} payment term.
+25. Add {{DEVICE_1_ADDON}}.
+26. Click Add to cart.
+27. Wait for New service 1 to be displayed in New services.","- Message shown: ""Stock availability and/or Estimated Shipment Date (ESD) check failed..."" on the {{SKU_RTSA_ERROR}} device card.
+- The warning stays displayed on the {{SKU_RTSA_ERROR}} device card.
+- Message shown: ""Cart updated"".
+- New service 1 shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_25","Mobile PLP - Plans panel default","Validate plans panel content and entitlements","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.","- Each plan tile shows Contract type, National calls, National SMS, IDD Zone 1 and IDD Zone 2 values.
+- Critical information summary and Rates and charges links are displayed on each plan tile.
+- Only the {{PLAN_1}} plan tile shows Selected.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_26","Mobile PLP - Plan links open","Validate Critical information summary and Rates and charges redirection","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Click Critical information summary on the {{PLAN_1}} plan tile.
+17. Navigate back.
+18. Click Rates and charges on the {{PLAN_1}} plan tile.
+19. Navigate back.","- Critical information summary opens its destination page.
+- Rates and charges opens its destination page.
+- After each Navigate back the Mobile phones tab is displayed with prior state retained."
+"TOM_27","Mobile PLP - Quote max service limit","Validate maximum 10 services per quote guardrail","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Add new service.
+25. Select the {{PLAN_2}} plan tile.
+26. Open the {{DEVICE_2}} device card.
+27. Select the {{DEVICE_2_STORAGE}} storage option.
+28. Select the {{DEVICE_2_COLOUR}} colour option.
+29. Select the {{DEVICE_2_TERM}} payment term.
+30. Select {{DEVICE_2_ADDON}} in Device care.
+31. Click Add to cart.
+32. Wait for New service 2 to be displayed in New services.
+33. Click Add new service.
+34. Read the names of all plan tiles displayed on the Mobile phones tab and store them as {{RUNTIME_PLAN_LIST}}.
+35. Pick a random entry from {{RUNTIME_PLAN_LIST}} and store it as {{RUNTIME_PLAN_3}}.
+36. Select the {{RUNTIME_PLAN_3}} plan tile.
+37. Read the names of all device cards that show In stock and an enabled Select button, and store them as {{RUNTIME_DEVICE_LIST}}.
+38. Pick a random entry from {{RUNTIME_DEVICE_LIST}} and store it as {{RUNTIME_DEVICE_3}}.
+39. Open the {{RUNTIME_DEVICE_3}} device card.
+40. Pick the first storage option displayed on {{RUNTIME_DEVICE_3}}, select it and store it as {{RUNTIME_DEVICE_3_STORAGE}}.
+41. Pick the first payment term displayed, select it and store it as {{RUNTIME_DEVICE_3_TERM}}.
+42. Click Add to cart.
+43. Wait for New service 3 to be displayed in New services.
+44. Click Add new service.
+45. Read the names of all plan tiles displayed on the Mobile phones tab and store them as {{RUNTIME_PLAN_LIST}}.
+46. Pick a random entry from {{RUNTIME_PLAN_LIST}} and store it as {{RUNTIME_PLAN_4}}.
+47. Select the {{RUNTIME_PLAN_4}} plan tile.
+48. Read the names of all device cards that show In stock and an enabled Select button, and store them as {{RUNTIME_DEVICE_LIST}}.
+49. Pick a random entry from {{RUNTIME_DEVICE_LIST}} and store it as {{RUNTIME_DEVICE_4}}.
+50. Open the {{RUNTIME_DEVICE_4}} device card.
+51. Pick the first storage option displayed on {{RUNTIME_DEVICE_4}}, select it and store it as {{RUNTIME_DEVICE_4_STORAGE}}.
+52. Pick the first payment term displayed, select it and store it as {{RUNTIME_DEVICE_4_TERM}}.
+53. Click Add to cart.
+54. Wait for New service 4 to be displayed in New services.
+55. Click Add new service.
+56. Read the names of all plan tiles displayed on the Mobile phones tab and store them as {{RUNTIME_PLAN_LIST}}.
+57. Pick a random entry from {{RUNTIME_PLAN_LIST}} and store it as {{RUNTIME_PLAN_5}}.
+58. Select the {{RUNTIME_PLAN_5}} plan tile.
+59. Read the names of all device cards that show In stock and an enabled Select button, and store them as {{RUNTIME_DEVICE_LIST}}.
+60. Pick a random entry from {{RUNTIME_DEVICE_LIST}} and store it as {{RUNTIME_DEVICE_5}}.
+61. Open the {{RUNTIME_DEVICE_5}} device card.
+62. Pick the first storage option displayed on {{RUNTIME_DEVICE_5}}, select it and store it as {{RUNTIME_DEVICE_5_STORAGE}}.
+63. Pick the first payment term displayed, select it and store it as {{RUNTIME_DEVICE_5_TERM}}.
+64. Click Add to cart.
+65. Wait for New service 5 to be displayed in New services.
+66. Click Add new service.
+67. Read the names of all plan tiles displayed on the Mobile phones tab and store them as {{RUNTIME_PLAN_LIST}}.
+68. Pick a random entry from {{RUNTIME_PLAN_LIST}} and store it as {{RUNTIME_PLAN_6}}.
+69. Select the {{RUNTIME_PLAN_6}} plan tile.
+70. Read the names of all device cards that show In stock and an enabled Select button, and store them as {{RUNTIME_DEVICE_LIST}}.
+71. Pick a random entry from {{RUNTIME_DEVICE_LIST}} and store it as {{RUNTIME_DEVICE_6}}.
+72. Open the {{RUNTIME_DEVICE_6}} device card.
+73. Pick the first storage option displayed on {{RUNTIME_DEVICE_6}}, select it and store it as {{RUNTIME_DEVICE_6_STORAGE}}.
+74. Pick the first payment term displayed, select it and store it as {{RUNTIME_DEVICE_6_TERM}}.
+75. Click Add to cart.
+76. Wait for New service 6 to be displayed in New services.
+77. Click Add new service.
+78. Read the names of all plan tiles displayed on the Mobile phones tab and store them as {{RUNTIME_PLAN_LIST}}.
+79. Pick a random entry from {{RUNTIME_PLAN_LIST}} and store it as {{RUNTIME_PLAN_7}}.
+80. Select the {{RUNTIME_PLAN_7}} plan tile.
+81. Read the names of all device cards that show In stock and an enabled Select button, and store them as {{RUNTIME_DEVICE_LIST}}.
+82. Pick a random entry from {{RUNTIME_DEVICE_LIST}} and store it as {{RUNTIME_DEVICE_7}}.
+83. Open the {{RUNTIME_DEVICE_7}} device card.
+84. Pick the first storage option displayed on {{RUNTIME_DEVICE_7}}, select it and store it as {{RUNTIME_DEVICE_7_STORAGE}}.
+85. Pick the first payment term displayed, select it and store it as {{RUNTIME_DEVICE_7_TERM}}.
+86. Click Add to cart.
+87. Wait for New service 7 to be displayed in New services.
+88. Click Add new service.
+89. Read the names of all plan tiles displayed on the Mobile phones tab and store them as {{RUNTIME_PLAN_LIST}}.
+90. Pick a random entry from {{RUNTIME_PLAN_LIST}} and store it as {{RUNTIME_PLAN_8}}.
+91. Select the {{RUNTIME_PLAN_8}} plan tile.
+92. Read the names of all device cards that show In stock and an enabled Select button, and store them as {{RUNTIME_DEVICE_LIST}}.
+93. Pick a random entry from {{RUNTIME_DEVICE_LIST}} and store it as {{RUNTIME_DEVICE_8}}.
+94. Open the {{RUNTIME_DEVICE_8}} device card.
+95. Pick the first storage option displayed on {{RUNTIME_DEVICE_8}}, select it and store it as {{RUNTIME_DEVICE_8_STORAGE}}.
+96. Pick the first payment term displayed, select it and store it as {{RUNTIME_DEVICE_8_TERM}}.
+97. Click Add to cart.
+98. Wait for New service 8 to be displayed in New services.
+99. Click Add new service.
+100. Read the names of all plan tiles displayed on the Mobile phones tab and store them as {{RUNTIME_PLAN_LIST}}.
+101. Pick a random entry from {{RUNTIME_PLAN_LIST}} and store it as {{RUNTIME_PLAN_9}}.
+102. Select the {{RUNTIME_PLAN_9}} plan tile.
+103. Read the names of all device cards that show In stock and an enabled Select button, and store them as {{RUNTIME_DEVICE_LIST}}.
+104. Pick a random entry from {{RUNTIME_DEVICE_LIST}} and store it as {{RUNTIME_DEVICE_9}}.
+105. Open the {{RUNTIME_DEVICE_9}} device card.
+106. Pick the first storage option displayed on {{RUNTIME_DEVICE_9}}, select it and store it as {{RUNTIME_DEVICE_9_STORAGE}}.
+107. Pick the first payment term displayed, select it and store it as {{RUNTIME_DEVICE_9_TERM}}.
+108. Click Add to cart.
+109. Wait for New service 9 to be displayed in New services.
+110. Click Add new service.
+111. Read the names of all plan tiles displayed on the Mobile phones tab and store them as {{RUNTIME_PLAN_LIST}}.
+112. Pick a random entry from {{RUNTIME_PLAN_LIST}} and store it as {{RUNTIME_PLAN_10}}.
+113. Select the {{RUNTIME_PLAN_10}} plan tile.
+114. Read the names of all device cards that show In stock and an enabled Select button, and store them as {{RUNTIME_DEVICE_LIST}}.
+115. Pick a random entry from {{RUNTIME_DEVICE_LIST}} and store it as {{RUNTIME_DEVICE_10}}.
+116. Open the {{RUNTIME_DEVICE_10}} device card.
+117. Pick the first storage option displayed on {{RUNTIME_DEVICE_10}}, select it and store it as {{RUNTIME_DEVICE_10_STORAGE}}.
+118. Pick the first payment term displayed, select it and store it as {{RUNTIME_DEVICE_10_TERM}}.
+119. Click Add to cart.
+120. Wait for New service 10 to be displayed in New services.
+121. Click Add new service.
+122. Read the names of all plan tiles displayed on the Mobile phones tab and store them as {{RUNTIME_PLAN_LIST}}.
+123. Pick a random entry from {{RUNTIME_PLAN_LIST}} and store it as {{RUNTIME_PLAN_11}}.
+124. Select the {{RUNTIME_PLAN_11}} plan tile.
+125. Read the names of all device cards that show In stock and an enabled Select button, and store them as {{RUNTIME_DEVICE_LIST}}.
+126. Pick a random entry from {{RUNTIME_DEVICE_LIST}} and store it as {{RUNTIME_DEVICE_11}}.
+127. Open the {{RUNTIME_DEVICE_11}} device card.
+128. Pick the first storage option displayed on {{RUNTIME_DEVICE_11}}, select it and store it as {{RUNTIME_DEVICE_11_STORAGE}}.
+129. Pick the first payment term displayed, select it and store it as {{RUNTIME_DEVICE_11_TERM}}.
+130. Click Add to cart.","- Message shown: ""Adding more than 10 services into a quote is not allowed."".
+- New service 11 is not added to New services.
+- New service 1 to New service 10 remain unchanged.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_28","Mobile PLP - Purchase and offer details open","Validate purchase and offer details modal content","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click View purchase & offer details.","- Purchase & offer details view shows Account level products, Existing services and New services sections.
+- Recurring charges, One time charges and Total are displayed.
+- New service 1 in the details view shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}."
+"TOM_29","Mobile PLP - Purchase and offer details close","Validate close action returns to same Mobile PLP context","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click View purchase & offer details.
+25. Click Close on the purchase & offer details view.","- Purchase & offer details view closes.
+- New service 1 still shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
+- Recurring charges, One time charges and Total are unchanged.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_30","Mobile PLP - Bundle calculation default","Validate Calculate Bundle & Save action default flow","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Add new service.
+25. Select the {{PLAN_2}} plan tile.
+26. Open the {{DEVICE_2}} device card.
+27. Select the {{DEVICE_2_STORAGE}} storage option.
+28. Select the {{DEVICE_2_COLOUR}} colour option.
+29. Select the {{DEVICE_2_TERM}} payment term.
+30. Select {{DEVICE_2_ADDON}} in Device care.
+31. Click Add to cart.
+32. Wait for New service 2 to be displayed in New services.
+33. Click Calculate Bundle & Save.
+34. Wait for the message ""Bundle and save calculation is completed."" to be displayed.","- Message shown: ""Bundle and save calculation is completed."".
+- Recurring charges, One time charges and Total are updated for New service 1 and New service 2.
+- New service 1 and New service 2 Edit buttons remain enabled.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_31","Mobile PLP - Bundle calculation completed note","Validate explicit calculation completed note and state persistence","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Add new service.
+25. Select the {{PLAN_2}} plan tile.
+26. Open the {{DEVICE_2}} device card.
+27. Select the {{DEVICE_2_STORAGE}} storage option.
+28. Select the {{DEVICE_2_COLOUR}} colour option.
+29. Select the {{DEVICE_2_TERM}} payment term.
+30. Select {{DEVICE_2_ADDON}} in Device care.
+31. Click Add to cart.
+32. Wait for New service 2 to be displayed in New services.
+33. Click Calculate Bundle & Save.
+34. Wait for the message ""Bundle and save calculation is completed."" to be displayed.
+35. Open the Wearables tab.
+36. Open the Mobile phones tab.","- Message shown: ""Bundle and save calculation is completed."".
+- The message is still displayed after returning to the Mobile phones tab.
+- New service 1 and New service 2 show the same Recurring charges, One time charges and Total as immediately after calculation.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_32","Mobile PLP - Bundle not eligible note","Validate non-eligible bundle note","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_NON_BUNDLE}} plan tile.
+17. Open the {{DEVICE_NON_BUNDLE}} device card.
+18. Select the {{DEVICE_NON_BUNDLE_STORAGE}} storage option.
+19. Select the {{DEVICE_NON_BUNDLE_TERM}} payment term.
+20. Click Add to cart.
+21. Wait for New service 1 to be displayed in New services.
+22. Click Calculate Bundle & Save.","- Message shown: ""The items in your cart are not eligible for bundle and save."".
+- No bundle discount is applied to New service 1.
+- New service 1 Edit button remains enabled.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_33","Mobile PLP - Values not updated popup","Validate pricing stale popup before Create quote/Create order","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Calculate Bundle & Save.
+25. Wait for the message ""Bundle and save calculation is completed."" to be displayed.
+26. Click Edit on the New service 1 row.
+27. Wait for the edit page header ""You are editing New service 1"" to be displayed.
+28. Select the {{DEVICE_1_STORAGE_ALT}} storage option.
+29. Click Save and add to cart.
+30. Wait for New service 1 to be displayed in New services.
+31. Click Create quote.
+32. Click Go back in the Values not updated popup.","- Popup shown: ""Values not updated... Please click Calculate Bundle & Save to update pricing and proceed."".
+- Quote page does not load while values are not updated.
+- After Go back New service 1 shows {{DEVICE_1_STORAGE_ALT}}.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_34","Mobile PLP - Values popup proceed via recalc","Validate recalculation path from blocking popup","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Calculate Bundle & Save.
+25. Wait for the message ""Bundle and save calculation is completed."" to be displayed.
+26. Click Edit on the New service 1 row.
+27. Wait for the edit page header ""You are editing New service 1"" to be displayed.
+28. Select the {{DEVICE_1_STORAGE_ALT}} storage option.
+29. Click Save and add to cart.
+30. Wait for New service 1 to be displayed in New services.
+31. Click Create quote.
+32. Click Calculate Bundle & Save in the Values not updated popup.
+33. Wait for the message ""Bundle and save calculation is completed."" to be displayed.
+34. Click Create quote.","- Popup shown: ""Values not updated... Please click Calculate Bundle & Save to update pricing and proceed."".
+- Message shown: ""Bundle and save calculation is completed."".
+- Quote page loads after the second Create quote.
+- New service 1 shows {{DEVICE_1_STORAGE_ALT}} in the quote."
+"TOM_35","Mobile PLP - Edit service entry","Validate service edit entry and context labeling","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Edit on the New service 1 row.
+25. Click Go back.","- Edit page header shows ""You are editing New service 1"".
+- Cancel editing and Save and add to cart buttons are displayed.
+- After Go back New service 1 still shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_36","Mobile PLP - Cancel editing","Validate cancel editing path returns safely without unintended updates","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Edit on the New service 1 row.
+25. Select the {{DEVICE_1_STORAGE_ALT}} storage option.
+26. Click Cancel editing.","- Edit view closes after Cancel editing.
+- New service 1 still shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}} and not {{DEVICE_1_STORAGE_ALT}}.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_37","Mobile PLP - Create quote action","Validate Create quote action availability and redirection","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Calculate Bundle & Save.
+25. Wait for the message ""Bundle and save calculation is completed."" to be displayed.
+26. Click Create quote.
+27. Wait for the quote page to finish loading.","- Message shown: ""Bundle and save calculation is completed."".
+- Quote page loads after Create quote.
+- Quote shows New service 1 with {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
+- User is not redirected to Fixed PLP."
+"TOM_38","Mobile PLP - Create order action","Validate Create order action availability and redirection","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Calculate Bundle & Save.
+25. Wait for the message ""Bundle and save calculation is completed."" to be displayed.
+26. Click Create order.
+27. Wait for the order page to finish loading.","- Message shown: ""Bundle and save calculation is completed."".
+- Order page loads after Create order.
+- Order shows New service 1 with {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
+- User is not redirected to Fixed PLP."
+"TOM_39","Mobile PLP - Save quote and exit","Validate Save quote and exit redirection and resume readiness","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Click Save quote and exit.
+25. Wait for the quote search page to finish loading.
+26. Click Search all quotes.
+27. Enter {{CUSTOMER_LAST_NAME}} in the quote search Last name field.
+28. Click Search.
+29. Click Resume Quote on the latest quote row for {{CUSTOMER_FIRST_NAME}} {{CUSTOMER_LAST_NAME}}.
+30. Wait for the Mobile phones tab to finish loading.","- Message shown: ""Changes have been made to your order successfully."". after Save quote and exit.
+- Quote search page loads.
+- The saved quote for {{CUSTOMER_FIRST_NAME}} {{CUSTOMER_LAST_NAME}} is listed.
+- After Resume Quote New service 1 shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}."
+"TOM_40","Mobile PLP - Tablets and MBB tab","Validate Tablets & MBB tab end-to-end selection flow","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Tablets & MBB tab.
+16. Select the {{TABLET_PLAN_1}} plan tile.
+17. Open the {{TABLET_1}} device card.
+18. Click Add to cart.
+19. Wait for New service 1 to be displayed in New services.","- Tablets & MBB tab controls are displayed and enabled.
+- Message shown: ""Cart updated"".
+- New service 1 shows {{TABLET_PLAN_1}} / {{TABLET_1}}.
+- User remains on the Tablets & MBB tab."
+"TOM_41","Mobile PLP - Tablets and MBB selected state","Validate selected state transitions in Tablets & MBB tab","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Tablets & MBB tab.
+16. Select the {{TABLET_PLAN_1}} plan tile.
+17. Open the {{TABLET_1}} device card.
+18. Click Clear selection.","- Before Clear selection the {{TABLET_PLAN_1}} plan tile and {{TABLET_1}} device card show Selected.
+- After Clear selection neither tile shows Selected.
+- No row is added to New services.
+- User remains on the Tablets & MBB tab."
+"TOM_42","Mobile PLP - Bundles tab","Validate Bundles tab list and select behavior","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Bundles tab.
+16. Click Select on the {{BUNDLE_1}} bundle card.
+17. Click Add to cart.
+18. Wait for New service 1 to be displayed in New services.","- The {{BUNDLE_1}} bundle card shows Selected.
+- Message shown: ""Cart updated"".
+- New service 1 shows {{BUNDLE_1}}.
+- User remains on the Bundles tab."
+"TOM_43","Mobile PLP - Bundles deselect/reset","Validate clearing bundle selection","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Bundles tab.
+16. Click Select on the {{BUNDLE_1}} bundle card.
+17. Click Clear selection.","- Before Clear selection the {{BUNDLE_1}} bundle card shows Selected.
+- After Clear selection the {{BUNDLE_1}} bundle card does not show Selected.
+- No row is added to New services."
+"TOM_44","Mobile PLP - Wearables tab listing","Validate wearables listing, controls, and attributes","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Open the Wearables tab.
+25. Click Select on the {{WEARABLE_1}} wearable card.","- Wearables tab shows Search, Sort by and Filter by brand controls.
+- The {{WEARABLE_1}} wearable card shows Colour, Case size, Band, Band size and Payment term fields.
+- Only the {{WEARABLE_1}} wearable card shows Selected for New service 1.
+- User remains on the Wearables tab."
+"TOM_45","Mobile PLP - Wearables max boundary","Validate boundary where more than five wearables are blocked","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Open the Wearables tab.
+25. Click Select on the {{WEARABLE_1}} wearable card.
+26. Click Select on the {{WEARABLE_2}} wearable card.
+27. Click Select on the {{WEARABLE_3}} wearable card.
+28. Click Select on the {{WEARABLE_4}} wearable card.
+29. Click Select on the {{WEARABLE_5}} wearable card.
+30. Click Select on the {{WEARABLE_6}} wearable card.
+31. Click {{CART_UPDATE_BUTTON}}.","- Validation message is displayed when {{WEARABLE_6}} is selected.
+- New service 1 holds 5 wearables ({{WEARABLE_1}} to {{WEARABLE_5}}).
+- {{WEARABLE_6}} is not added to New service 1.
+- User remains on the Wearables tab."
+"TOM_46","Mobile PLP - Accessories tab listing","Validate accessories listing and APP payment term controls","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Open the Accessories tab.
+25. Select {{APP_PAYMENT_TERM}} in the APP payment term drop-down.
+26. Click Select on the {{ACCESSORY_1}} accessory card.","- Accessories tab shows 0 item selected before {{ACCESSORY_1}} is selected.
+- APP payment term drop-down shows {{APP_PAYMENT_TERM}}.
+- The {{ACCESSORY_1}} accessory card shows product code and estimated delivery date.
+- Only the {{ACCESSORY_1}} accessory card shows Selected for New service 1."
+"TOM_47","Mobile PLP - Accessories max boundary","Validate boundary where more than ten accessories are blocked","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Open the Accessories tab.
+25. Click Select on the {{ACCESSORY_1}} accessory card.
+26. Click Select on the {{ACCESSORY_2}} accessory card.
+27. Click Select on the {{ACCESSORY_3}} accessory card.
+28. Click Select on the {{ACCESSORY_4}} accessory card.
+29. Click Select on the {{ACCESSORY_5}} accessory card.
+30. Click Select on the {{ACCESSORY_6}} accessory card.
+31. Click Select on the {{ACCESSORY_7}} accessory card.
+32. Click Select on the {{ACCESSORY_8}} accessory card.
+33. Click Select on the {{ACCESSORY_9}} accessory card.
+34. Click Select on the {{ACCESSORY_10}} accessory card.
+35. Click Select on the {{ACCESSORY_11}} accessory card.
+36. Click {{CART_UPDATE_BUTTON}}.","- Validation message is displayed when {{ACCESSORY_11}} is selected.
+- New service 1 holds 10 accessories ({{ACCESSORY_1}} to {{ACCESSORY_10}}).
+- {{ACCESSORY_11}} is not added to New service 1.
+- User remains on the Accessories tab."
+"TOM_48","Mobile PLP - Accessories delivery postcode","Validate accessory delivery estimate lookup and persistence","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Open the Accessories tab.
+25. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+26. Click Search in Check delivery estimate.
+27. Click Select on the {{ACCESSORY_1}} accessory card.
+28. Click {{CART_UPDATE_BUTTON}}.
+29. Click Edit on the New service 1 row.","- Estimated delivery date on the {{ACCESSORY_1}} accessory card refreshes for {{DELIVERY_POSTCODE}}.
+- {{ACCESSORY_1}} is added to New service 1.
+- Edit view of New service 1 shows delivery location {{DELIVERY_POSTCODE}}."
+"TOM_49","Mobile PLP - Correct page redirection from tabs","Validate every tab action keeps user in Mobile PLP journey","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Open the Tablets & MBB tab.
+25. Open the Filter by brand drop-down.
+26. Select the {{BRAND_FILTER}} option.
+27. Open the Bundles tab.
+28. Open the Wearables tab.
+29. Open the Filter by brand drop-down.
+30. Select the {{BRAND_FILTER}} option.
+31. Open the Accessories tab.
+32. Open the Filter by brand drop-down.
+33. Select the {{BRAND_FILTER}} option.
+34. Open the Mobile phones tab.","- Each tab opens within the Mobile PLP journey.
+- After returning to the Mobile phones tab the same quote reference is displayed.
+- New service 1 still shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}}.
+- No tab redirects to Fixed PLP."
+"TOM_50","Mobile PLP - Footer action persistence","Validate footer actions are always present across Mobile PLP tabs","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Open the Tablets & MBB tab.
+17. Open the Bundles tab.
+18. Open the Wearables tab.
+19. Open the Accessories tab.
+20. Open the Mobile phones tab.
+21. Open the Filter by brand drop-down.
+22. Select the {{BRAND_FILTER}} option.","- Calculate Bundle & Save, View purchase & offer details, Create quote and Create order are displayed on every tab opened.
+- No footer action disappears when switching tabs.
+- Device cards displayed after the filter are {{BRAND_FILTER}} devices.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_51","Mobile PLP - SIM Only quantity guardrail","Validate SIM Only quantity greater than 1 blocks device selection","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_SIMO}} plan tile.
+17. Click + on the {{PLAN_SIMO}} quantity control.
+18. Click Select on the {{DEVICE_1}} device card.
+19. Click − on the {{PLAN_SIMO}} quantity control.
+20. Click Select on the {{DEVICE_1}} device card.","- With {{PLAN_SIMO}} quantity 2 the {{DEVICE_1}} device card does not show Selected.
+- No device line is added while quantity is greater than 1.
+- With {{PLAN_SIMO}} quantity 1 the {{DEVICE_1}} device card shows Selected.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_52","Mobile PLP - Plan-first compatible device set","Validate plan-first selection shows only compatible devices","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.","- The {{PLAN_1}} plan tile shows Selected.
+- Device carousel refreshes after plan selection.
+- Only device cards compatible with {{PLAN_1}} remain selectable; other device cards are hidden or disabled.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_53","Mobile PLP - Incompatible device block","Validate incompatible devices are not selectable after plan-first filtering","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Click Select on the {{DEVICE_INCOMPATIBLE_WITH_PLAN_1}} device card.","- The {{DEVICE_INCOMPATIBLE_WITH_PLAN_1}} device card does not show Selected.
+- The {{PLAN_1}} plan tile still shows Selected.
+- No device is added to the current service context.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_54","Mobile PLP - RTSA re-trigger storage change","Validate RTSA API re-triggers when device storage changes","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+17. Click Search in Check delivery estimate.
+18. Open the {{DEVICE_1}} device card.
+19. Select the {{DEVICE_1_STORAGE}} storage option.
+20. Select the {{DEVICE_1_STORAGE_ALT}} storage option.","- Selecting {{DEVICE_1_STORAGE_ALT}} sends a new stock check for that SKU.
+- The {{DEVICE_1}} device card stock status refreshes to the returned state.
+- If the returned state is Out of Stock or Non-Orderable, message shown: ""Please select another colour/storage option"". and selection is blocked.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_55","Mobile PLP - RTSA re-trigger colour change","Validate RTSA API re-triggers when device colour changes","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+17. Click Search in Check delivery estimate.
+18. Open the {{DEVICE_1}} device card.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_COLOUR_ALT}} colour option.","- Selecting {{DEVICE_1_COLOUR_ALT}} sends a new stock check for that SKU.
+- The {{DEVICE_1}} device card stock status refreshes to the returned state.
+- If the returned state is Out of Stock or Non-Orderable, message shown: ""Please select another colour/storage option"". and selection is blocked.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_56","Mobile PLP - RTSA re-trigger device change","Validate RTSA API re-triggers when device changes via selection/search","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+17. Click Search in Check delivery estimate.
+18. Open the {{DEVICE_1}} device card.
+19. Enter {{DEVICE_2}} in Search.
+20. Click Search.
+21. Open the {{DEVICE_2}} device card.","- Opening {{DEVICE_2}} sends a new stock check for the {{DEVICE_2}} SKU.
+- The {{DEVICE_2}} device card shows the returned stock status and any stock warning.
+- Actions on {{DEVICE_2}} are blocked or allowed in line with the returned stock state.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_57","Mobile PLP - Wearable RTSA re-trigger colour","Validate wearable RTSA re-triggers on colour change","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Open the Wearables tab.
+25. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+26. Click Search in Check delivery estimate.
+27. Open the {{WEARABLE_1}} wearable card.
+28. Select the {{WEARABLE_1_COLOUR_ALT}} colour option.","- Selecting {{WEARABLE_1_COLOUR_ALT}} sends a new stock check for the {{WEARABLE_1}} SKU.
+- The {{WEARABLE_1}} wearable card stock status refreshes.
+- A non-purchasable result blocks selection of the variant.
+- User remains on the Wearables tab."
+"TOM_58","Mobile PLP - Wearable RTSA re-trigger case size","Validate wearable RTSA re-triggers on case size change","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Open the Wearables tab.
+25. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+26. Click Search in Check delivery estimate.
+27. Open the {{WEARABLE_1}} wearable card.
+28. Select the {{WEARABLE_1_CASE_SIZE_ALT}} case size option.","- Selecting {{WEARABLE_1_CASE_SIZE_ALT}} sends a new stock check for the {{WEARABLE_1}} SKU.
+- The {{WEARABLE_1}} wearable card stock status refreshes.
+- A non-purchasable result blocks selection of the variant.
+- User remains on the Wearables tab."
+"TOM_59","Mobile PLP - Wearable RTSA re-trigger band","Validate wearable RTSA re-triggers on band change","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Open the Wearables tab.
+25. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+26. Click Search in Check delivery estimate.
+27. Open the {{WEARABLE_1}} wearable card.
+28. Select the {{WEARABLE_1_BAND_ALT}} band option.","- Selecting {{WEARABLE_1_BAND_ALT}} sends a new stock check for the {{WEARABLE_1}} SKU.
+- The {{WEARABLE_1}} wearable card stock status refreshes.
+- A non-purchasable result blocks selection of the variant.
+- User remains on the Wearables tab."
+"TOM_60","Mobile PLP - Wearable RTSA re-trigger band size","Validate wearable RTSA re-triggers on band size change","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Open the Wearables tab.
+25. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+26. Click Search in Check delivery estimate.
+27. Open the {{WEARABLE_1}} wearable card.
+28. Select the {{WEARABLE_1_BAND_SIZE_ALT}} band size option.","- Selecting {{WEARABLE_1_BAND_SIZE_ALT}} sends a new stock check for the {{WEARABLE_1}} SKU.
+- The {{WEARABLE_1}} wearable card stock status refreshes.
+- A non-purchasable result blocks selection of the variant.
+- User remains on the Wearables tab."
+"TOM_61","Mobile PLP - Dedicated stock status Low Stock","Validate Low Stock state rendering and behavior","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+17. Click Search in Check delivery estimate.
+18. Select the {{PLAN_1}} plan tile.
+19. Open the {{SKU_LOW_STOCK}} device card.
+20. Click Add to cart.","- The {{SKU_LOW_STOCK}} device card shows ""Low Stock"" with a low-stock indicator.
+- Add to cart outcome is explicit: New service 1 is added, or a visible warning blocks it.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_62","Mobile PLP - Dedicated stock status Back-order","Validate Back-order message and replenishment date rendering","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+17. Click Search in Check delivery estimate.
+18. Select the {{PLAN_1}} plan tile.
+19. Open the {{SKU_BACKORDER}} device card.
+20. Click Add to cart.","- The {{SKU_BACKORDER}} device card shows ""Back-order"".
+- Message shown: ""Device will ship from (replenishment date)"" with a date value.
+- Add to cart outcome follows the back-order policy.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_63","Mobile PLP - Dedicated stock status Non-Orderable","Validate Non-Orderable maps to Out of Stock and blocks invalid choice","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Enter {{DELIVERY_POSTCODE}} in Check delivery estimate.
+17. Click Search in Check delivery estimate.
+18. Select the {{PLAN_1}} plan tile.
+19. Open the {{SKU_NON_ORDERABLE}} device card.
+20. Click Add to cart.","- The {{SKU_NON_ORDERABLE}} device card shows Out of Stock.
+- Message shown: ""Please select another colour/storage option"".
+- No row is added to New services.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_64","Mobile PLP - Check store stock selection gate","Validate Check store stock is blocked before device select and enabled after select","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Click Check store stock on the {{DEVICE_1}} device card.
+17. Click Select on the {{DEVICE_1}} device card.
+18. Click Check store stock on the {{DEVICE_1}} device card.","- Before device selection Check store stock does not open a stock panel.
+- After selecting {{DEVICE_1}} Check store stock opens the stock panel for {{DEVICE_1}} with its product code.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_65","Mobile PLP - Pagination selection persistence","Validate selected device/plan state persists during pagination navigation","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Click Select on the {{DEVICE_1}} device card.
+18. Click the next arrow on the device carousel.
+19. Click the previous arrow on the device carousel.","- The {{PLAN_1}} plan tile and {{DEVICE_1}} device card still show Selected after next and previous arrows.
+- Item counter range changes on next and returns on previous.
+- No row is added to New services.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_66","Mobile PLP - Filter persistence across pagination","Validate brand filter persists during pagination and back navigation","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Open the Filter by brand drop-down.
+17. Select the {{BRAND_FILTER}} option.
+18. Click the next arrow on the device carousel.
+19. Click the previous arrow on the device carousel.
+20. Open the {{DEVICE_1}} device card.
+21. Navigate back.","- {{BRAND_FILTER}} filter stays active after next and previous arrows.
+- {{BRAND_FILTER}} filter stays active after Navigate back from the {{DEVICE_1}} device card.
+- Only {{BRAND_FILTER}} device cards are displayed.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_67","Mobile PLP - Multiple plan selection to separate services","Validate multiple selected plans create separate services on Add to cart","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Select the {{PLAN_2}} plan tile.
+18. Click Add to cart.
+19. Wait for New service 2 to be displayed in New services.","- Message shown: ""Cart updated"".
+- New service 1 shows {{PLAN_1}} and New service 2 shows {{PLAN_2}}.
+- New service 1 and New service 2 each have their own Edit button.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_68","Mobile PLP - Wearables prerequisite validation","Validate wearables selection is blocked until device/plan prerequisite is met","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Open the Wearables tab.
+17. Click Select on the {{WEARABLE_1}} wearable card.
+18. Open the Mobile phones tab.
+19. Select the {{PLAN_1}} plan tile.
+20. Open the {{DEVICE_1}} device card.
+21. Select the {{DEVICE_1_STORAGE}} storage option.
+22. Select the {{DEVICE_1_COLOUR}} colour option.
+23. Select the {{DEVICE_1_TERM}} payment term.
+24. Add {{DEVICE_1_ADDON}}.
+25. Click Add to cart.
+26. Wait for New service 1 to be displayed in New services.
+27. Open the Wearables tab.
+28. Click Select on the {{WEARABLE_1}} wearable card.","- Message shown: ""Please select plan or device."" on the first {{WEARABLE_1}} Select.
+- {{WEARABLE_1}} is not added before New service 1 exists.
+- After New service 1 is created the {{WEARABLE_1}} wearable card shows Selected."
+"TOM_69","Mobile PLP - Accessories prerequisite validation","Validate accessories selection is blocked until device/plan prerequisite is met","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Open the Accessories tab.
+17. Click Select on the {{ACCESSORY_1}} accessory card.
+18. Open the Mobile phones tab.
+19. Select the {{PLAN_1}} plan tile.
+20. Open the {{DEVICE_1}} device card.
+21. Select the {{DEVICE_1_STORAGE}} storage option.
+22. Select the {{DEVICE_1_COLOUR}} colour option.
+23. Select the {{DEVICE_1_TERM}} payment term.
+24. Add {{DEVICE_1_ADDON}}.
+25. Click Add to cart.
+26. Wait for New service 1 to be displayed in New services.
+27. Open the Accessories tab.
+28. Click Select on the {{ACCESSORY_1}} accessory card.","- Message shown: ""Please select plan or device."" on the first {{ACCESSORY_1}} Select.
+- {{ACCESSORY_1}} is not added before New service 1 exists.
+- After New service 1 is created the {{ACCESSORY_1}} accessory card shows Selected."
+"TOM_70","Mobile PLP - Device care prerequisite validation","Validate device care cannot be selected before a device is selected","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Add {{DEVICE_1_ADDON}}.
+18. Open the {{DEVICE_1}} device card.
+19. Select the {{DEVICE_1_STORAGE}} storage option.
+20. Add {{DEVICE_1_ADDON}}.","- Adding {{DEVICE_1_ADDON}} with only {{PLAN_1}} selected is blocked.
+- No {{DEVICE_1_ADDON}} line is created before a device is selected.
+- After {{DEVICE_1}} {{DEVICE_1_STORAGE}} is selected {{DEVICE_1_ADDON}} is added to the service.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."
+"TOM_71","Mobile PLP - Save and Resume full persistence","Validate Save Quote and Resume Quote persist all Mobile PLP selections","1. Open {{ENV_URL}}.
+2. Enter {{ENV_USERNAME}} in User ID.
+3. Enter {{ENV_PASSWORD}} in Password.
+4. Click Login.
+5. Open Application Menu and click Site Map.
+6. Enter {{SITEMAP_FILTER}} in the Site Map filter.
+7. Click the Sales calculator link.
+8. Enter {{CUSTOMER_FIRST_NAME}} in First name.
+9. Enter {{CUSTOMER_LAST_NAME}} in Last name.
+10. Click Enter new customer details.
+11. Enter {{ADDRESS_SEARCH}} in Address lookup Search.
+12. Click the address result whose text matches {{ADDRESS_RESULT_TEXT}}.
+13. Wait for the Coverage check page to finish loading.
+14. Click Next.
+15. Open the Mobile phones tab.
+16. Select the {{PLAN_1}} plan tile.
+17. Open the {{DEVICE_1}} device card.
+18. Select the {{DEVICE_1_STORAGE}} storage option.
+19. Select the {{DEVICE_1_COLOUR}} colour option.
+20. Select the {{DEVICE_1_TERM}} payment term.
+21. Add {{DEVICE_1_ADDON}}.
+22. Click Add to cart.
+23. Wait for New service 1 to be displayed in New services.
+24. Open the Wearables tab.
+25. Click Select on the {{WEARABLE_1}} wearable card.
+26. Open the Accessories tab.
+27. Click Select on the {{ACCESSORY_1}} accessory card.
+28. Click {{CART_UPDATE_BUTTON}}.
+29. Click Save quote and exit.
+30. Wait for the quote search page to finish loading.
+31. Click Search all quotes.
+32. Enter {{CUSTOMER_LAST_NAME}} in the quote search Last name field.
+33. Click Search.
+34. Click Resume Quote on the latest quote row for {{CUSTOMER_FIRST_NAME}} {{CUSTOMER_LAST_NAME}}.
+35. Wait for the Mobile phones tab to finish loading.","- Message shown: ""Changes have been made to your order successfully."". after Save quote and exit.
+- The saved quote for {{CUSTOMER_FIRST_NAME}} {{CUSTOMER_LAST_NAME}} is listed with status Quote In Progress.
+- After Resume Quote New service 1 shows {{PLAN_1}} / {{DEVICE_1}} {{DEVICE_1_STORAGE}} {{DEVICE_1_COLOUR}} with {{DEVICE_1_ADDON}}.
+- New service 1 still holds {{WEARABLE_1}} and {{ACCESSORY_1}}.
+- User remains on the Mobile phones tab and is not redirected to Fixed PLP."

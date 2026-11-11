@@ -35,7 +35,7 @@ function findDataWorkbook() {
     }
     if (!fs.existsSync(INPUT_DIR)) return null;
     const hit = fs.readdirSync(INPUT_DIR)
-        .find((f) => /data/i.test(f) && /\.xlsx$/i.test(f) && !/_results\.xlsx$/i.test(f) && !f.startsWith('~$'));
+        .find((f) => /data/i.test(f) && /\.xlsx$/i.test(f) && !/_results\.xlsx$/i.test(f) && !/backup|copy|\bold\b/i.test(f) && !f.startsWith('~$'));
     return hit ? path.join(INPUT_DIR, hit) : null;
 }
 
